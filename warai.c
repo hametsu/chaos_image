@@ -171,31 +171,25 @@ void detect_and_draw( IplImage* img )
 			for( i = 0; i < (faces ? faces->total : 0); i++ )
 				{
 					IplImage* warai_scale = NULL;
-					IplImage* warai_mask_scale = NULL;
+					// IplImage* warai_mask_scale = NULL;
 					CvRect* r = (CvRect*)cvGetSeqElem( faces, i );
 					CvRect roi = cvRect(0, 0, 0, 0);
-					// cvInRangeS
-					// CvPoint center;
-					// int radius;
-					// center.x = cvRound((r->x + r->width*0.5)*scale);
-					// center.y = cvRound((r->y + r->height*0.5)*scale);
 					roi.x = cvRound(r->x * scale);
 					roi.y = cvRound(r->y * scale);
 					roi.width = cvRound(r->width * scale);
 					roi.height = cvRound(r->height * scale);
-
-					
 					
 
 					warai_scale = cvCreateImage(cvSize(roi.width, roi.height), IPL_DEPTH_8U, 3);
 					cvResize(warai, warai_scale, CV_INTER_CUBIC);
-					warai_mask_scale = cvCreateImage(cvSize(roi.width, roi.height), IPL_DEPTH_8U, 3);
-					cvResize(warai_mask, warai_mask_scale, CV_INTER_CUBIC);
-					// cvInRangeS(warai_scale, cvScalarAll(100), cvScalarAll(255), warai_mask_scale);
-					cvThreshold(warai_mask_scale, warai_mask_scale, 0, 255, CV_THRESH_BINARY);
+					
+					// warai_mask_scale = cvCreateImage(cvSize(roi.width, roi.height), IPL_DEPTH_8U, 3);
+					// cvResize(warai_mask, warai_mask_scale, CV_INTER_CUBIC);
+					/// cvInRangeS(warai_scale, cvScalarAll(100), cvScalarAll(255), warai_mask_scale);
+					// cvThreshold(warai_mask_scale, warai_mask_scale, 0, 255, CV_THRESH_BINARY);
 
 					cvSetImageROI(img, roi);
-					cvCopy(warai_mask_scale, img, NULL);
+					cvCopy(warai_scale, img, NULL);
 					// cvCopy(warai_mask, img, NULL);
 					cvResetImageROI(img);
 					// cvReleaseImage(&warai_mask_scale);
