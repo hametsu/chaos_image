@@ -38,7 +38,7 @@ int main( int argc, char** argv )
 		}
 	else
 		{
-			cascade_name = "../../data/haarcascades/haarcascade_frontalface_alt2.xml";
+			cascade_name = "./haarcascade_frontalface_alt2.xml";
 			input_name = argc > 1 ? argv[1] : 0;
 		}
 
@@ -64,9 +64,7 @@ int main( int argc, char** argv )
 		{
 			for(;;)
 				{
-					if( !cvGrabFrame( capture ))
-						break;
-					frame = cvRetrieveFrame( capture );
+					frame = cvQueryFrame( capture );
 					if( !frame )
 						break;
 					if( !frame_copy )
