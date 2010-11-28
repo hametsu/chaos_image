@@ -130,6 +130,7 @@ int main( int argc, char** argv )
 
 void detect_and_draw( IplImage* img )
 {
+	static int count = 0;
 	static CvScalar colors[] = 
 		{
 			{{0,0,255}},
@@ -163,13 +164,10 @@ void detect_and_draw( IplImage* img )
 			t = (double)cvGetTickCount() - t;
 			printf( "detection time = %gms\n", t/((double)cvGetTickFrequency()*1000.) );
 			IplImage* warai = NULL;
-			IplImage* warai_mask = NULL;
 			warai = cvLoadImage("warai.png", CV_LOAD_IMAGE_ANYCOLOR);
-			warai_mask = cvLoadImage("warai_mask.bmp", CV_LOAD_IMAGE_ANYCOLOR);
 			for( i = 0; i < (faces ? faces->total : 0); i++ )
 				{
 					IplImage* warai_scale = NULL;
-					// IplImage* warai_mask_scale = NULL;
 					CvRect* r = (CvRect*)cvGetSeqElem( faces, i );
 					CvRect roi = cvRect(0, 0, 0, 0);
 					roi.x = cvRound(r->x * scale);
@@ -181,23 +179,19 @@ void detect_and_draw( IplImage* img )
 					warai_scale = cvCreateImage(cvSize(roi.width, roi.height), IPL_DEPTH_8U, 3);
 					cvResize(warai, warai_scale, CV_INTER_CUBIC);
 					
-					// warai_mask_scale = cvCreateImage(cvSize(roi.width, roi.height), IPL_DEPTH_8U, 3);
-					// cvResize(warai_mask, warai_mask_scale, CV_INTER_CUBIC);
-					/// cvInRangeS(warai_scale, cvScalarAll(100), cvScalarAll(255), warai_mask_scale);
-					// cvThreshold(warai_mask_scale, warai_mask_scale, 0, 255, CV_THRESH_BINARY);
-
 					cvSetImageROI(img, roi);
+					if (count % 12 == 0) {
+						cvSaveImage("hoge", img, 0);
+					}
 					cvCopy(warai_scale, img, NULL);
-					// cvCopy(warai_mask, img, NULL);
 					cvResetImageROI(img);
-					// cvReleaseImage(&warai_mask_scale);
 					cvReleaseImage(&warai_scale);
 				}
-			cvReleaseImage(&warai_mask);
 			cvReleaseImage(&warai);
 		}
 
 	cvShowImage( "result", img );
 	cvReleaseImage( &gray );
 	cvReleaseImage( &small_img );
+	count++;
 }
