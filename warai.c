@@ -181,7 +181,9 @@ void detect_and_draw( IplImage* img )
 					
 					cvSetImageROI(img, roi);
 					if (count % 12 == 0) {
-						cvSaveImage("hoge", img, 0);
+						char filename[256];
+						sprintf(filename, "face%02d_%ld.jpg", i, time(NULL));
+						cvSaveImage(filename, img, 0);
 					}
 					cvCopy(warai_scale, img, NULL);
 					cvResetImageROI(img);
