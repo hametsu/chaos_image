@@ -237,8 +237,8 @@ int detect_same_face( IplImage* img, IplImage* img_old, CvRect facearea ) {
 
 	dx = 0;
 	dy = 0;
-	for (i = 0; i < velx->width; i++) {
-		for (j = 0; j < vely->height; j++) {
+	for (i = 0; i < velx->cols; i++) {
+		for (j = 0; j < vely->rows; j++) {
 			dx += (int)cvGetReal2D(velx, j, i);
 			dy += (int)cvGetReal2D(vely, j, i);
 		}
