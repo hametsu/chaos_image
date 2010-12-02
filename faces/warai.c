@@ -18,7 +18,9 @@
 static CvMemStorage* storage = 0;
 static CvHaarClassifierCascade* cascade = 0;
 
-void detect_and_draw( IplImage* image );
+CvSeq* detect_face(IplImage* img);
+void draw_warai(IplImage* img, CvSeq* faces);
+int detect_same_face( IplImage* img, IplImage* img_old, CvRect facearea );
 
 const char* cascade_name =
 	"haarcascade_frontalface_alt.xml";
@@ -28,8 +30,10 @@ int main( int argc, char** argv )
 {
 	CvCapture* capture = 0;
 	IplImage *frame, *frame_copy = 0;
+    IplImage *frame_old = 0;
 	int optlen = strlen("--cascade=");
 	const char* input_name;
+	CvSeq* faces;
 
 	if( argc > 1 && strncmp( argv[1], "--cascade=", optlen ) == 0 )
 		{
@@ -58,12 +62,16 @@ int main( int argc, char** argv )
 	else
 		capture = cvCaptureFromAVI( input_name ); 
 
+    frame = cvQueryFrame( capture );
+    frame_old = cvCreateImage( cvSize(frame->width,frame->height),
+                                                             IPL_DEPTH_8U, frame->nChannels );
 	cvNamedWindow( "result", 1 );
 
 	if( capture )
 		{
 			for(;;)
 				{
+                    cvCopy( frame, frame_old, 0 );
 					frame = cvQueryFrame( capture );
 					if( !frame )
 						break;
@@ -75,7 +83,8 @@ int main( int argc, char** argv )
 					else
 						cvFlip( frame, frame_copy, 0 );
             
-					detect_and_draw( frame_copy );
+					faces = detect_face( frame_copy );
+					draw_warai(frame_copy, faces);
 
 					if( cvWaitKey( 10 ) >= 0 )
 						break;
@@ -91,7 +100,8 @@ int main( int argc, char** argv )
 
 			if( image )
 				{
-					detect_and_draw( image );
+					faces = detect_face( image );
+					draw_warai(image, faces);
 					cvWaitKey(0);
 					cvReleaseImage( &image );
 				}
@@ -112,7 +122,8 @@ int main( int argc, char** argv )
 									image = cvLoadImage( buf, 1 );
 									if( image )
 										{
-											detect_and_draw( image );
+											faces = detect_face( image );
+											draw_warai(image, faces);
 											cvWaitKey(0);
 											cvReleaseImage( &image );
 										}
@@ -128,9 +139,8 @@ int main( int argc, char** argv )
 	return 0;
 }
 
-void detect_and_draw( IplImage* img )
+CvSeq* detect_face(IplImage* img)
 {
-	static int count = 0;
 	static CvScalar colors[] = 
 		{
 			{{0,0,255}},
@@ -143,57 +153,98 @@ void detect_and_draw( IplImage* img )
 			{{255,0,255}}
 		};
 
-	double scale = 1.3;
+	double scale = 1.0;
 	IplImage* gray = cvCreateImage( cvSize(img->width,img->height), 8, 1 );
 	IplImage* small_img = cvCreateImage( cvSize( cvRound (img->width/scale),
 																cvRound (img->height/scale)),
-													 8, 1 );
-	int i;
-
+																	 8, 1 );
 	cvCvtColor( img, gray, CV_BGR2GRAY );
 	cvResize( gray, small_img, CV_INTER_LINEAR );
 	cvEqualizeHist( small_img, small_img );
 	cvClearMemStorage( storage );
 
 	if( cascade )
-		{
-			double t = (double)cvGetTickCount();
-			CvSeq* faces = cvHaarDetectObjects( small_img, cascade, storage,
+	{
+		double t = (double)cvGetTickCount();
+		CvSeq* faces = cvHaarDetectObjects( small_img, cascade, storage,
 															1.1, 2, 0/*CV_HAAR_DO_CANNY_PRUNING*/,
-															cvSize(30, 30) );
-			t = (double)cvGetTickCount() - t;
-			printf( "detection time = %gms\n", t/((double)cvGetTickFrequency()*1000.) );
-			IplImage* warai = NULL;
-			warai = cvLoadImage("warai.png", CV_LOAD_IMAGE_ANYCOLOR);
-			for( i = 0; i < (faces ? faces->total : 0); i++ )
-				{
-					IplImage* warai_scale = NULL;
-					CvRect* r = (CvRect*)cvGetSeqElem( faces, i );
-					CvRect roi = cvRect(0, 0, 0, 0);
-					roi.x = cvRound(r->x * scale);
-					roi.y = cvRound(r->y * scale);
-					roi.width = cvRound(r->width * scale);
-					roi.height = cvRound(r->height * scale);
-					
-
-					warai_scale = cvCreateImage(cvSize(roi.width, roi.height), IPL_DEPTH_8U, 3);
-					cvResize(warai, warai_scale, CV_INTER_CUBIC);
-					
-					cvSetImageROI(img, roi);
-					if (count % 12 == 0) {
-						char filename[256];
-						sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
-						cvSaveImage(filename, img, 0);
-					}
-					cvCopy(warai_scale, img, NULL);
-					cvResetImageROI(img);
-					cvReleaseImage(&warai_scale);
-				}
-			cvReleaseImage(&warai);
-		}
-
-	cvShowImage( "result", img );
+															cvSize(200, 200) );
+		t = (double)cvGetTickCount() - t;
+		printf( "detection time = %gms\n", t/((double)cvGetTickFrequency()*1000.) );
+		return faces;
+	}
 	cvReleaseImage( &gray );
 	cvReleaseImage( &small_img );
+}
+
+void draw_warai(IplImage* img, CvSeq* faces)
+{
+	int i;
+	static int count = 0;
+	double scale = 1.0;
+	IplImage* warai = NULL;
+	warai = cvLoadImage("warai.png", CV_LOAD_IMAGE_ANYCOLOR);
+	for( i = 0; i < (faces ? faces->total : 0); i++ )
+	{
+		IplImage* warai_scale = NULL;
+		CvRect* r = (CvRect*)cvGetSeqElem( faces, i );
+		CvRect roi = cvRect(0, 0, 0, 0);
+		roi.x = cvRound(r->x * scale);
+		roi.y = cvRound(r->y * scale);
+		roi.width = cvRound(r->width * scale);
+		roi.height = cvRound(r->height * scale);
+
+		warai_scale = cvCreateImage(cvSize(roi.width, roi.height), IPL_DEPTH_8U, 3);
+		cvResize(warai, warai_scale, CV_INTER_CUBIC);
+
+		cvSetImageROI(img, roi);
+		if (count % 12 == 0) {
+			char filename[256];
+			sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
+			cvSaveImage(filename, img, 0);
+		}
+		cvCopy(warai_scale, img, NULL);
+		cvResetImageROI(img);
+		cvReleaseImage(&warai_scale);
+	}
+	cvReleaseImage(&warai);
+
+	cvShowImage( "result", img );
 	count++;
+}
+
+int detect_same_face( IplImage* img, IplImage* img_old, CvRect facearea ) {
+	int i, j, dx, dy;
+	int block_size = 10;
+	int shift_size = 10;
+	CvSize face_size = cvSize(facearea.width, facearea.height);
+	IplImage *img_gray = cvCreateImage(face_size, IPL_DEPTH_8U, 1);
+	IplImage *img_gray_old = cvCreateImage(face_size, IPL_DEPTH_8U, 1);
+	CvMat *velx, *vely;
+	CvSize block = cvSize(block_size, block_size);
+	CvSize shift = cvSize(shift_size, shift_size);
+	CvSize max_range = cvSize(50, 50);
+	int cols = floor((facearea.width - block.width) / shift.width);
+	int rows = floor((facearea.width - block.height) / shift.height);
+	velx = cvCreateMat(rows, cols, CV_32FC1);
+	vely = cvCreateMat(rows, cols, CV_32FC1);
+	cvSetZero(velx);
+	cvSetZero(vely);
+
+	cvCvtColor(img, img_gray, CV_BGR2GRAY);
+	cvCvtColor(img_old, img_gray_old, CV_BGR2GRAY);
+	cvCalcOpticalFlowBM(img_gray_old, img_gray, block, shift, max_range, 0, velx, vely);
+
+	dx = 0;
+	dy = 0;
+	for (i = 0; i < velx->width; i++) {
+		for (j = 0; j < vely->height; j++) {
+			dx += (int)cvGetReal2D(velx, j, i);
+			dy += (int)cvGetReal2D(vely, j, i);
+		}
+	}
+	dx /= i*j;
+	dy /= i*j;
+	printf("%d %d %d\n", dx, dy, i*j);
+	return 0;
 }
