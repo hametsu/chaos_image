@@ -33,7 +33,18 @@ int main( int argc, char** argv )
     IplImage *frame_old = 0;
 	int optlen = strlen("--cascade=");
 	const char* input_name;
-	CvSeq* faces;
+	CvSeq* faces = 0;
+
+	//for camshift
+	int vmin = 65, vmax = 256, smin = 55;
+	float maxval = 0.f;
+	float ranges[] = {0, 180};
+	float *historange = ranges;
+	IplImage *hsv, *hue, *mask, *prob;
+	CvHistogram *hist;
+	int histbins = 30;
+	int detected = 0;
+	CvRect *facerect, facerect_old;
 
 	if( argc > 1 && strncmp( argv[1], "--cascade=", optlen ) == 0 )
 		{
@@ -65,6 +76,14 @@ int main( int argc, char** argv )
     frame = cvQueryFrame( capture );
     frame_old = cvCreateImage( cvSize(frame->width,frame->height),
                                                              IPL_DEPTH_8U, frame->nChannels );
+	//for camshift
+	CvConnectedComp components;
+	CvBox2D facebox;
+	hsv = cvCreateImage(cvSize(frame->width, frame->height), 8, 3);
+	hue = cvCreateImage(cvSize(frame->width, frame->height), 8, 1);
+	mask = cvCreateImage(cvSize(frame->width, frame->height), 8, 1);
+	prob = cvCreateImage(cvSize(frame->width, frame->height), 8, 1);
+
 	cvNamedWindow( "result", 1 );
 
 	if( capture )
@@ -85,6 +104,60 @@ int main( int argc, char** argv )
             
 					faces = detect_face( frame_copy );
 					draw_warai(frame_copy, faces);
+
+					//for camshift
+					//faces = detect_face(frame_copy);
+					if(!faces->total)
+					{
+						if(detected)
+						{
+							detected = 0;
+							printf("not detected\n");
+							cvReleaseHist(&hist);
+						}
+					}
+					else
+					{
+						cvCvtColor( frame_copy, hsv, CV_BGR2HSV );
+						cvInRangeS( hsv, cvScalar(0, smin, MIN(vmin,vmax), 0),
+	          						  cvScalar(180, 256, MAX(vmin,vmax) ,0), mask );
+						cvSplit( hsv, hue, 0, 0, 0 );
+						if(detected)
+						{
+							facerect = (CvRect*)cvGetSeqElem( faces, 0 );
+
+							cvCalcBackProject( &hue, prob, hist );
+						    cvAnd( prob, mask, prob, 0 );
+
+						    cvCamShift( prob, facerect_old,
+						                cvTermCriteria( CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 10, 1 ),
+						                &components, &facebox );
+
+						    facerect_old = components.rect;
+							facebox.angle = -facebox.angle;
+							cvEllipseBox(frame_copy, facebox,
+		          						   CV_RGB(255,0,0), 3, CV_AA, 0 );
+							cvShowImage("result", frame_copy);
+
+
+						}
+						else
+						{
+							detected = 1;
+							printf("detected\n");
+							hist = cvCreateHist(1, &histbins, CV_HIST_ARRAY, &historange, 1);
+							facerect = (CvRect*)cvGetSeqElem( faces, 0 );
+							cvSetImageROI( hue, *facerect );
+							cvSetImageROI( mask,   *facerect );
+							cvCalcHist( &hue, hist, 0, mask );
+							cvGetMinMaxHistValue( hist, 0, &maxval, 0, 0 );
+							cvConvertScale( hist->bins, hist->bins, maxval? 255.0/maxval : 0, 0 );
+							cvResetImageROI( hue );
+							cvResetImageROI( mask );
+							facerect_old = *facerect;
+						}
+					}
+					
 
 					if( cvWaitKey( 10 ) >= 0 )
 						break;
@@ -133,7 +206,12 @@ int main( int argc, char** argv )
 				}
 
 		}
-    
+	//for camshift
+	cvReleaseImage(&hsv);
+	cvReleaseImage(&hue);
+	cvReleaseImage(&mask);
+	cvReleaseImage(&prob);
+
 	cvDestroyWindow("result");
 
 	return 0;
@@ -170,7 +248,7 @@ CvSeq* detect_face(IplImage* img)
 															1.1, 2, 0/*CV_HAAR_DO_CANNY_PRUNING*/,
 															cvSize(200, 200) );
 		t = (double)cvGetTickCount() - t;
-		printf( "detection time = %gms\n", t/((double)cvGetTickFrequency()*1000.) );
+		//printf( "detection time = %gms\n", t/((double)cvGetTickFrequency()*1000.) );
 		return faces;
 	}
 	cvReleaseImage( &gray );
