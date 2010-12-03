@@ -17,6 +17,7 @@
 
 static CvMemStorage* storage = 0;
 static CvHaarClassifierCascade* cascade = 0;
+int angle = 0;
 
 CvSeq* detect_face(IplImage* img);
 void draw_warai(IplImage* img, CvSeq* faces);
@@ -184,10 +185,14 @@ void draw_warai(IplImage* img, CvSeq* faces)
 	double scale = 1.0;
 	IplImage* warai = NULL;
 	IplImage* resized = cvCreateImage(cvSize(128, 128), IPL_DEPTH_8U, 3);
-	warai = cvLoadImage("warai.png", CV_LOAD_IMAGE_ANYCOLOR);
+	//warai = cvLoadImage("warai.png", CV_LOAD_IMAGE_ANYCOLOR);
+
+	angle += 30;
+	
 	for( i = 0; i < (faces ? faces->total : 0); i++ )
 	{
 		IplImage* warai_scale = NULL;
+		CvMat* rotmat;
 		CvRect* r = (CvRect*)cvGetSeqElem( faces, i );
 		CvRect roi = cvRect(0, 0, 0, 0);
 		roi.x = cvRound(r->x * scale);
@@ -196,9 +201,13 @@ void draw_warai(IplImage* img, CvSeq* faces)
 		roi.height = cvRound(r->height * scale);
 
 		warai_scale = cvCreateImage(cvSize(roi.width, roi.height), IPL_DEPTH_8U, 3);
-		cvResize(warai, warai_scale, CV_INTER_CUBIC);
+		rotmat = cvCreateMat(2, 3, CV_32FC1);
+		cv2DRotationMatrix(cvPoint2D32f(roi.height/2, roi.width/2), angle, 1, rotmat);
+		//cvResize(warai, warai_scale, CV_INTER_CUBIC);
 
 		cvSetImageROI(img, roi);
+		cvWarpAffine(img, warai_scale, rotmat, 0, cvScalarAll(0));
+
 		if (count % 12 == 0) {
 			char filename[256];
 			sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
