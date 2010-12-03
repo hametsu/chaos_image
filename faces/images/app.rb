@@ -19,7 +19,7 @@ def jpgs(n, after = nil)
   end
   files.sort do |a, b|
     b.ctime <=> a.ctime
-  end[0..n]
+  end[0..n].reverse
 end
 
 def faces_and_last_time(jpgs)
