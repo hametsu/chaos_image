@@ -193,7 +193,6 @@ function webGLStart() {
 function handleNewFace(data) {
   data.faces.forEach(function(f) {
     var imageUrl = hametsu.Face.API_BASE + f;
-    document.getElementById("unko").appendChild(document.createElement('p').appendChild(document.createTextNode(imageUrl)));
     var itoyanagi = new Itoyanagi({
       initialPosition : [
         Math.random()*2, 
