@@ -147,7 +147,7 @@
   function initTexture() {
     var crateImage = new Image();
  
-    for (var i=0; i < 3; i++) {
+    for (var i=0; i < 3; i++) { // >
       var texture = gl.createTexture();
       texture.image = crateImage;
       crateTextures.push(texture);
@@ -273,6 +273,10 @@
   var cubeVertexPositionBuffer;
   var cubeVertexTextureCoordBuffer;
   var cubeVertexIndexBuffer;
+
+  var cubeVertexPositionBuffer2;
+  var cubeVertexTextureCoordBuffer2;
+  var cubeVertexIndexBuffer2;
   function initBuffers() {
     cubeVertexPositionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexPositionBuffer);
@@ -308,6 +312,44 @@
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(cubeVertexIndices), gl.STATIC_DRAW);
     cubeVertexIndexBuffer.itemSize = 1;
     cubeVertexIndexBuffer.numItems = 6;
+
+
+
+
+    cubeVertexPositionBuffer2 = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexPositionBuffer2);
+    vertices = [
+      // Front face
+      -0.5, -0.5,  0.5,
+       0.5, -0.5,  1.5,
+       0.5,  0.5,  1.5,
+      -0.5,  0.5,  1.5
+    ];
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    cubeVertexPositionBuffer2.itemSize = 3;
+    cubeVertexPositionBuffer2.numItems = 4;
+ 
+    cubeVertexTextureCoordBuffer2 = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexTextureCoordBuffer2);
+    var textureCoords = [
+      // Front face
+      0.0, 0.0,
+      1.0, 0.0,
+      1.0, 1.0,
+      0.0, 1.0
+    ];
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(textureCoords), gl.STATIC_DRAW);
+    cubeVertexTextureCoordBuffer2.itemSize = 2;
+    cubeVertexTextureCoordBuffer2.numItems = 4;
+ 
+    cubeVertexIndexBuffer2 = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer2);
+    var cubeVertexIndices2 = [
+      0, 1, 2,      0, 2, 3    // Front face
+    ]
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(cubeVertexIndices2), gl.STATIC_DRAW);
+    cubeVertexIndexBuffer2.itemSize = 1;
+    cubeVertexIndexBuffer2.numItems = 6;
   }
  
  
@@ -319,7 +361,7 @@
     loadIdentity();
  
     mvTranslate([0.0, 0.0, z]);
- 
+  
     mvRotate(xRot, [1, 0, 0]);
     mvRotate(yRot, [0, 1, 0]);
  
@@ -329,17 +371,27 @@
     gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexTextureCoordBuffer);
     gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, cubeVertexTextureCoordBuffer.itemSize, gl.FLOAT, false, 0, 0);
  
-    mvTranslate([0.0, 0.0, z + 0.1]);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, crateTextures[filter]);
+    gl.uniform1i(shaderProgram.samplerUniform, 0);
  
-    mvRotate(xRot + 0.1, [1, 0, 0]);
-    mvRotate(yRot + 0.1, [0, 1, 0]);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
+    setMatrixUniforms();
+    gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+
+
+
+
+
  
+    mvRotate(yRot, [1, 0, 0]);
+    mvRotate(xRot, [0, 1, 0]);
+  
     gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexPositionBuffer);
     gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, cubeVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
  
     gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexTextureCoordBuffer);
     gl.vertexAttribPointer(shaderProgram.textureCoordAttribute, cubeVertexTextureCoordBuffer.itemSize, gl.FLOAT, false, 0, 0);
- 
  
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, crateTextures[filter]);
@@ -348,7 +400,6 @@
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
     setMatrixUniforms();
     gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
- 
   }
  
  
@@ -402,15 +453,10 @@
  
  
 <body onload="webGLStart();"> 
-  <a href="http://learningwebgl.com/blog/?p=571">&lt;&lt; Back to Lesson 6</a><br /> 
- 
+  <h1>takashipom</h1> 
   <canvas id="lesson06-canvas" style="border: none;" width="500" height="500"></canvas> 
- 
-  <h2>unko</h2> 
- 
-  <br/> 
-  <a href="http://learningwebgl.com/blog/?p=571">&lt;&lt; Back to Lesson 6</a><br /> 
- 
+
+<p>aaaa</p>
 <!-- Google Analytics stuff, please ignore - nothing to do with WebGL :-) --> 
 <script type="text/javascript"> 
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -421,7 +467,7 @@ try {
 var pageTracker = _gat._getTracker("UA-2240015-5");
 pageTracker._trackPageview();
 } catch(err) {}</script> 
- 
+
 </body> 
  
 </html>
