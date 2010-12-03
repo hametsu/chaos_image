@@ -2,6 +2,8 @@ require 'rubygems'
 require 'sinatra'
 require 'json/pure'
 
+set :public, File.dirname(__FILE__)
+
 get '/' do
   redirect '/latest'
 end
