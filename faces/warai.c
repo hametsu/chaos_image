@@ -183,6 +183,7 @@ void draw_warai(IplImage* img, CvSeq* faces)
 	static int count = 0;
 	double scale = 1.0;
 	IplImage* warai = NULL;
+	IplImage* resized = cvCreateImage(cvSize(128, 128), IPL_DEPTH_8U, 3);
 	warai = cvLoadImage("warai.png", CV_LOAD_IMAGE_ANYCOLOR);
 	for( i = 0; i < (faces ? faces->total : 0); i++ )
 	{
@@ -201,7 +202,8 @@ void draw_warai(IplImage* img, CvSeq* faces)
 		if (count % 12 == 0) {
 			char filename[256];
 			sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
-			cvSaveImage(filename, img, 0);
+			cvResize(img, resized, CV_INTER_CUBIC);
+			cvSaveImage(filename, resized, 0);
 		}
 		cvCopy(warai_scale, img, NULL);
 		cvResetImageROI(img);
