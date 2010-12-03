@@ -8,16 +8,18 @@ get '/' do
   redirect '/latest'
 end
 
-def jpgs(n)
+def jpgs(n, after = nil)
   files = []
   Dir::foreach('.') do |f|
     if f =~ /.*\.jpg/ then
-      files << File.open(f)
+      file = File.open(f)
+      (files << file) if (after and after < file.ctime.to_i)
+      (files << file) unless after
     end
   end
   files.sort do |a, b|
-    a.ctime <=> b.ctime
-  end[0...n]
+    b.ctime <=> a.ctime
+  end[0..n]
 end
 
 def faces_and_last_time(jpgs)
@@ -37,6 +39,11 @@ end
 
 get '/last/:n' do
   headers 'Content-Type' => 'application/json', 'Access-Control-Allow-Origin' => '*'
-  faces_and_last_time(jpgs(params[:n].to_i)).to_json
+  faces_and_last_time(jpgs(params[:n].to_i - 1)).to_json
+end
+
+get '/after/:unixtime' do
+  headers 'Content-Type' => 'application/json', 'Access-Control-Allow-Origin' => '*'
+  faces_and_last_time(jpgs(-1, params[:unixtime].to_i)).to_json
 end
 
