@@ -25,7 +25,7 @@ end
 def faces_and_last_time(jpgs)
   result = Hash.new
   result['faces'] = []
-  result['time']  = nil
+  result['time']  = Time.now
   jpgs.each do |f|
     result['faces'] << f.path
     result['time'] = f.ctime.to_i
