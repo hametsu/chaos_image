@@ -34,6 +34,7 @@ get '/latest' do
 end
 
 get '/last/:n' do
+  headers 'Content-Type' => 'application/json', 'Access-Control-Allow-Origin' => '*'
   faces_and_last_time(jpgs(params[:n].to_i)).to_json
 end
 
