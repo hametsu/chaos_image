@@ -40,21 +40,3 @@ get '/last/:n' do
   faces_and_last_time(jpgs(params[:n].to_i)).to_json
 end
 
-=begin
-    {
-      "faces" : [
-        "http://192.168.1.3:8000/1111111.jpg"],
-      time : 111111111111
-    }
-    {
-      "faces" : [
-        "http://192.168.1.3:8000/1111111.jpg",
-        "http://192.168.1.3:8000/2222222.jpg",
-        "http://192.168.1.3:8000/3333333.jpg"
-      ],
-      time : 111111111111
-    }
-=end
-
-
-
