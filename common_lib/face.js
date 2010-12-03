@@ -1,9 +1,5 @@
 (function(namespace) {
 
-  const INTERVAL = 3000;
-  const API_BASE = 'http://localhost:4567/';
-  const API = API_BASE + 'after/';
-
   //////////////////////////////////////////////////
   // Interface
   //////////////////////////////////////////////////
@@ -14,16 +10,28 @@
     purgeListenres : purgeListeners,
     startTimer : startTimer,
     stopTimer : stopTimer,
-    API_BASE : API_BASE
+    getAPIBase : getAPIBase,
+    setAPIBase : setAPIBase
   }
 
   //////////////////////////////////////////////////
   // Implementation
   //////////////////////////////////////////////////
-  var unixTime = '1171815102'; // An enough old time for first time
 
+  var INTERVAL = 3000;
+  var apiBase = 'http://localhost:4567/';
+
+  function getAPIBase() {
+    return apiBase;
+  }
+
+  function setAPIBase(base) {
+    apiBase = base;
+  }
+
+  var unixTime = '1171815102'; // An enough old time for first time
   function getFaces(callback) {
-    var url = API + unixTime;
+    var url = apiBase + 'after/' + unixTime;
 
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
