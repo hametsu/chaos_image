@@ -1,6 +1,6 @@
 (function(namespace) {
 
-  const INTERVAL = 4000;
+  const INTERVAL = 3000;
   const API_BASE = 'http://localhost:4567/';
   const API = API_BASE + 'after/';
 
