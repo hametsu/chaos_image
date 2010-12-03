@@ -21,6 +21,8 @@ static CvHaarClassifierCascade* cascade = 0;
 CvSeq* detect_face(IplImage* img);
 void draw_warai(IplImage* img, CvSeq* faces);
 int detect_same_face( IplImage* img, IplImage* img_old, CvRect facearea );
+int detect_near(CvRect a, CvRect b);
+void draw_rotate(IplImage* img, CvRect rect, int angle);
 
 const char* cascade_name =
 	"haarcascade_frontalface_alt.xml";
@@ -34,6 +36,7 @@ int main( int argc, char** argv )
 	int optlen = strlen("--cascade=");
 	const char* input_name;
 	CvSeq* faces = 0;
+	int rotate = 0;
 
 	//for camshift
 	int vmin = 65, vmax = 256, smin = 55;
@@ -103,7 +106,7 @@ int main( int argc, char** argv )
 						cvFlip( frame, frame_copy, 0 );
             
 					faces = detect_face( frame_copy );
-					draw_warai(frame_copy, faces);
+					//draw_warai(frame_copy, faces);
 
 					//for camshift
 					//faces = detect_face(frame_copy);
@@ -135,11 +138,11 @@ int main( int argc, char** argv )
 
 						    facerect_old = components.rect;
 							facebox.angle = -facebox.angle;
-							cvEllipseBox(frame_copy, facebox,
-		          						   CV_RGB(255,0,0), 3, CV_AA, 0 );
+							//cvEllipseBox(frame_copy, facebox,
+		          			//			   CV_RGB(255,0,0), 3, CV_AA, 0 );
+							rotate += 30;
+							draw_rotate(frame_copy, *facerect, rotate);
 							cvShowImage("result", frame_copy);
-
-
 						}
 						else
 						{
@@ -255,6 +258,19 @@ CvSeq* detect_face(IplImage* img)
 	cvReleaseImage( &small_img );
 }
 
+void draw_rotate(IplImage* img, CvRect rect, int angle)
+{
+	cvSetImageROI(img, rect);
+	IplImage* tmp = cvCreateImage(cvSize(rect.width, rect.height), IPL_DEPTH_8U, 3);
+	CvMat* rotmat;
+	rotmat = cvCreateMat(2, 3, CV_32FC1);
+	cv2DRotationMatrix(cvPoint2D32f(rect.height/2, rect.width/2), angle, 1, rotmat);
+	cvWarpAffine(img, tmp, rotmat, 0, cvScalarAll(0));
+	cvCopy(tmp, img, NULL);
+	cvResetImageROI(img);
+	cvReleaseImage(&tmp);
+}
+
 void draw_warai(IplImage* img, CvSeq* faces)
 {
 	int i;
@@ -278,7 +294,7 @@ void draw_warai(IplImage* img, CvSeq* faces)
 		cvSetImageROI(img, roi);
 		if (count % 12 == 0) {
 			char filename[256];
-			sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
+			sprintf(filename, "./images/face%02d_%ld.bmp", i, time(NULL));
 			cvSaveImage(filename, img, 0);
 		}
 		cvCopy(warai_scale, img, NULL);
@@ -325,4 +341,10 @@ int detect_same_face( IplImage* img, IplImage* img_old, CvRect facearea ) {
 	dy /= i*j;
 	printf("%d %d %d\n", dx, dy, i*j);
 	return 0;
+}
+
+int detect_near(CvRect a, CvRect b)
+{
+	int sum = abs(a.x-b.x) + abs(a.y-b.y) + abs(a.x+a.width-b.x-b.width) + abs(a.y+a.height-b.y-b.height);
+    return sum<(a.width+a.height/10) ? 1 : 0;
 }
