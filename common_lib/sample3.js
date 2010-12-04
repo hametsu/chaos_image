@@ -105,7 +105,7 @@ Itoyanagi.prototype = {
 
   move : function() {
     var y = this.currentPosition[1] - 0.1;
-    if (y < -5) {
+    if (y < -10) {
       y = y*-1;
     }
     this.currentPosition[1] = y;
@@ -140,7 +140,7 @@ function drawScene() {
   GLC.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0);
   GLC.loadIdentity();
 
-  GLC.mvTranslate([0.0, -1.0, -5.0]);
+  GLC.mvTranslate([0.0, -1.0, -10.0]);
 
   GLC.mvRotate(30, [1, 0, 0]);
   GLC.mvRotate(yRot, [0, 1, 0]);
@@ -192,7 +192,7 @@ function webGLStart() {
 
 function handleNewFace(data) {
   data.faces.forEach(function(f) {
-    var imageUrl = hametsu.Face.API_BASE + f;
+    var imageUrl = hametsu.Face.getAPIBase() + f;
     var itoyanagi = new Itoyanagi({
       initialPosition : [
         Math.random()*2, 
