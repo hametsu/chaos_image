@@ -17,8 +17,8 @@ def jpgs(n, after = nil)
         jpg[:path] = f.path
         jpg[:ctime] = f.ctime
         files << jpg
-      end if path =~ /.*\.jpg/
-    end
+      end
+    end if path =~ /.*\.jpg/
   end
   files.sort do |a, b|
     b[:ctime] <=> a[:ctime]
