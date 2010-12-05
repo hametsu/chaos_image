@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Sample for hametsu.Face module</title>
+    <!-- <script type="text/javascript" src="./js/jquery/1.4.2.min.js"></script> -->
+    <!-- <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/reset/reset-min.css" /> -->
+    <script type="text/javascript" src="./face.js"></script>
+    <script type="text/javascript" src="./lib/sylvester.js"></script>
+    <script type="text/javascript" src="./lib/glUtils.js"></script>
+    <script type="text/javascript" src="./gl.js"></script>
+    <script type="text/javascript" src="./sample3.js"></script>
+
+
+<script id="shader-fs" type="x-shader/x-fragment"> 
+  #ifdef GL_ES
+  precision highp float;
+  #endif
+ 
+  varying vec2 vTextureCoord;
+
+  uniform sampler2D uSampler;
+ 
+  void main(void) {
+    gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t));
+  }
+</script> 
+
+<script id="shader-vs" type="x-shader/x-vertex"> 
+  attribute vec3 aVertexPosition;
+  attribute vec2 aTextureCoord;
+ 
+  uniform mat4 uMVMatrix;
+  uniform mat4 uPMatrix;
+ 
+  varying vec2 vTextureCoord;
+ 
+  void main(void) {
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+    vTextureCoord = aTextureCoord;
+  }
+</script> 
+
+
+  </head>
+  <body onload="webGLStart();">
+    Test for hametsu.Face modules. When new faces comes, it appears here.<br />
+    <canvas id="webgl" style="border: none;" width="800" height="600"></canvas> 
+  </body>
+</html>
