@@ -10,16 +10,14 @@ end
 
 def jpgs(n, after = nil)
   files = []
-  Dir::foreach('.') do |f|
-    if f =~ /.*\.jpg/ then
-      file = File.open(f) do |f|
-        if after == nil or (after and after < f.ctime.to_i) then
-          jpg = {}
-          jpg[:path] = f.path
-          jpg[:ctime] = f.ctime
-          files << jpg
-        end
-      end
+  Dir::foreach('.') do |path|
+    File.open(path) do |f|
+      if after == nil or (after and after < f.ctime.to_i) then
+        jpg = {}
+        jpg[:path] = f.path
+        jpg[:ctime] = f.ctime
+        files << jpg
+      end if path =~ /.*\.jpg/
     end
   end
   files.sort do |a, b|
