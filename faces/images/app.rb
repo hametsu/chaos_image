@@ -12,13 +12,18 @@ def jpgs(n, after = nil)
   files = []
   Dir::foreach('.') do |f|
     if f =~ /.*\.jpg/ then
-      file = File.open(f)
-      (files << file) if (after and after < file.ctime.to_i)
-      (files << file) unless after
+      file = File.open(f) do |f|
+        if after == nil or (after and after < f.ctime.to_i) then
+          jpg = {}
+          jpg[:path] = f.path
+          jpg[:ctime] = f.ctime
+          files << jpg
+        end
+      end
     end
   end
   files.sort do |a, b|
-    b.ctime <=> a.ctime
+    b[:ctime] <=> a[:ctime]
   end[0..n].reverse
 end
 
@@ -27,8 +32,8 @@ def faces_and_last_time(jpgs)
   result['faces'] = []
   result['time']  = Time.now.to_i
   jpgs.each do |f|
-    result['faces'] << f.path
-    result['time'] = f.ctime.to_i
+    result['faces'] << f[:path]
+    result['time'] = f[:ctime].to_i
   end
   result
 end
