@@ -12,7 +12,7 @@ def jpgs(n, after = nil)
   files = []
   Dir::foreach('.') do |path|
     File.open(path) do |f|
-      if after == nil or (after and after < f.ctime.to_i) then
+      if after == nil or after < f.ctime.to_i then
         jpg = {}
         jpg[:path] = f.path
         jpg[:ctime] = f.ctime
