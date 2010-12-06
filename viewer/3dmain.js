@@ -5,7 +5,7 @@ var shaderProgram;
 var faceList;
 
 var fShaders = [
-  'shader-fs3',
+//  'shader-fs3',
   'shader-fs1',
   'shader-fs2',
   'shader-fs4',
@@ -163,11 +163,23 @@ var faceList;
 var faceListIdx = 0;
 var face;
 function initObjects() {
-  var img =  faceList[(faceListIdx++)%faceList.length];
+  var img =  img || faceList[(faceListIdx++)%faceList.length];
   console.info(hametsu.Face.getAPIBase() + img);
   face = new BackGround({
     imageUrl : hametsu.Face.getAPIBase() + img
   });
+}
+
+function handleNewFace(data) {
+  var lastFace;
+  data.faces.forEach(function(f) {
+    faceList.pop();
+    var img = new Image();
+    img.src = hametsu.Face.getAPIBase() + f;
+    faceList.push(img);
+    lastFace = hametsu.Face.getAPIBase() + f;
+  });
+  initObjects(lastFace);
 }
 
   
@@ -195,6 +207,7 @@ function webGLStart(faces) {
 
   gl.enable(gl.DEPTH_TEST);
   gl.depthFunc(gl.LEQUAL);
+  hametsu.Face.on(handleNewFace);
 
   setInterval(drawScene, 50);
 }

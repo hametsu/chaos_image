@@ -21,8 +21,10 @@ $(function() {
     */
   }
 
+  hametsu.Face.setAPIBase("http://192.168.1.16:4567/");
   hametsu.Face.getFaces(function(rs) {
     console.dir(rs);
+    rs.faces.reverse();
     start2D(rs.faces);
     start3D(rs.faces);
   });

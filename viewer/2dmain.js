@@ -1,5 +1,5 @@
 (function() {
-var NUM = 120;
+var NUM = 200;
 var WIDTH;
 var HEIGHT;
 var speedX = new Array(NUM);
@@ -36,6 +36,15 @@ function canvasStart(faces) {
   }
 }
 
+function handleNewFace(data) {
+  data.faces.forEach(function(f) {
+    imgs.pop();
+    var img = new Image();
+    img.src = hametsu.Face.getAPIBase() + f;
+    imgs.push(img);
+  });
+}
+
 function draw() {
 
 
@@ -59,14 +68,8 @@ function draw() {
     }
 
 
-
     ctx.drawImage(imgs[i], locX[i], locY[i], size[i], size[i])
-    /*
-    ctx.beginPath();
-    ctx.fillStyle = 'rgb(' + r[i] + ',' + g[i] + ',' + b[i] + ')';
-    ctx.arc(locX[i], locY[i], radius[i], 0, Math.PI*2.0, true);
-    ctx.fill();
-    */
+    hametsu.Face.on(handleNewFace);
   }
 }
 window.start2D = canvasStart;
