@@ -172,10 +172,10 @@ CvSeq* detect_face(IplImage* img)
 															cvSize(200, 200) );
 		t = (double)cvGetTickCount() - t;
 		printf( "detection time = %gms\n", t/((double)cvGetTickFrequency()*1000.) );
+		cvReleaseImage( &gray );
+		cvReleaseImage( &small_img );
 		return faces;
 	}
-	cvReleaseImage( &gray );
-	cvReleaseImage( &small_img );
 }
 
 void draw_warai(IplImage* img, CvSeq* faces)
@@ -219,6 +219,7 @@ void draw_warai(IplImage* img, CvSeq* faces)
 		cvReleaseImage(&warai_scale);
 	}
 	cvReleaseImage(&warai);
+	cvReleaseImage(&resized);
 
 	cvShowImage( "result", img );
 	count++;
