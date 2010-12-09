@@ -21,23 +21,26 @@
   ///////////////////////////////////////////////////
   // Implementation
   ///////////////////////////////////////////////////
-  var gl;
+  var ctx;
 
   function initGL(canvasId) {
     try {
       var canvas = document.getElementById(canvasId);
-      gl = canvas.getContext("experimental-webgl");
-      gl.viewportWidth = canvas.width;
-      gl.viewportHeight = canvas.height;
+      ctx = canvas.getContext("experimental-webgl");
+      if (WebGLDebugUtils) {
+        ctx = WebGLDebugUtils.makeDebugContext(ctx);
+      }
+      ctx.viewportWidth = canvas.width;
+      ctx.viewportHeight = canvas.height;
     } catch(e) {
     }
-    if (!gl) {
+    if (!ctx) {
       alert("Could not initialise WebGL, sorry :-(");
     }
-    return gl;
+    return ctx;
   }
   
-  function getShader(gl, id) {
+  function getShader(ctx, id) {
     var shaderScript = document.getElementById(id);
     if (!shaderScript) {
       return null;
@@ -54,18 +57,18 @@
 
     var shader;
     if (shaderScript.type == "x-shader/x-fragment") {
-      shader = gl.createShader(gl.FRAGMENT_SHADER);
+      shader = ctx.createShader(ctx.FRAGMENT_SHADER);
     } else if (shaderScript.type == "x-shader/x-vertex") {
-      shader = gl.createShader(gl.VERTEX_SHADER);
+      shader = ctx.createShader(ctx.VERTEX_SHADER);
     } else {
       return null;
     }
 
-    gl.shaderSource(shader, str);
-    gl.compileShader(shader);
+    ctx.shaderSource(shader, str);
+    ctx.compileShader(shader);
 
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      alert(gl.getShaderInfoLog(shader));
+    if (!ctx.getShaderParameter(shader, ctx.COMPILE_STATUS)) {
+      console.error('Shader Comple Error:', ctx.getShaderInfoLog(shader));
       return null;
     }
     return shader;
@@ -119,8 +122,8 @@
   }
 
   function setMatrixUniforms(shaderProgram) {
-    gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, new Float32Array(pMatrix.flatten()));
-    gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, new Float32Array(mvMatrix.flatten()));
+    ctx.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, new Float32Array(pMatrix.flatten()));
+    ctx.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, new Float32Array(mvMatrix.flatten()));
   }
 
   /////////////////////////////////////////////////////////
@@ -131,23 +134,23 @@
    * @private
    */
   function handleLoadedTextureDefault(texture) {
-    gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-    gl.bindTexture(gl.TEXTURE_2D, null);
+    ctx.bindTexture(ctx.TEXTURE_2D, texture);
+    ctx.pixelStorei(ctx.UNPACK_FLIP_Y_WEBGL, true);
+    ctx.texImage2D(ctx.TEXTURE_2D, 0, ctx.RGBA, ctx.RGBA, ctx.UNSIGNED_BYTE, texture.image);
+    ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_MAG_FILTER, ctx.NEAREST);
+    ctx.texParameteri(ctx.TEXTURE_2D, ctx.TEXTURE_MIN_FILTER, ctx.NEAREST);
+    ctx.bindTexture(ctx.TEXTURE_2D, null);
   }
 
   function createTexture(fileName, handleLoadedFn) {
     handleLoadedFn = handleLoadedFn || handleLoadedTextureDefault; 
-    var texture = gl.createTexture();
+    var texture = ctx.createTexture();
     texture.image = new Image();
     texture.image.onload = function() {
       handleLoadedFn(texture);
     }
     texture.image.onerror = function() {
-      alert('Image load error');
+      console.error('Image load error:', fileName);
     }
 
     texture.image.src = fileName;
@@ -173,10 +176,10 @@
   Buffer.prototype = {
     initialize : function(config) {
       this.bufferArr = [];
-      this.type = config.type || gl.ARRAY_BUFFER;
+      this.type = config.type || ctx.ARRAY_BUFFER;
       this.arrType = config.arrType || Float32Array
       this.itemSize = config.itemSize;
-      this.buffer = gl.createBuffer();
+      this.buffer = ctx.createBuffer();
     },
 
     addItem : function(arr) {
@@ -188,16 +191,16 @@
     },
 
     bind : function() {
-      gl.bindBuffer(this.type, this.buffer);
+      ctx.bindBuffer(this.type, this.buffer);
     },
 
     vertexAttribPointer : function(attr) {
-      gl.vertexAttribPointer(attr, this.itemSize, gl.FLOAT, false, 0, 0);
+      ctx.vertexAttribPointer(attr, this.itemSize, ctx.FLOAT, false, 0, 0);
     },
 
     bindData : function() {
-      gl.bindBuffer(this.type, this.buffer);
-      gl.bufferData(this.type, new this.arrType(this.bufferArr), gl.STATIC_DRAW);
+      ctx.bindBuffer(this.type, this.buffer);
+      ctx.bufferData(this.type, new this.arrType(this.bufferArr), ctx.STATIC_DRAW);
       this.numItems = this.bufferArr.length / this.itemSize;
       return this.buffer;
     }
