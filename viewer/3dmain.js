@@ -187,15 +187,13 @@
   function handleNewFace(data) {
     var lastFace;
     data.faces.forEach(function(f) {
-      faceList.pop();
-      var img = new Image();
-      img.src = hametsu.Face.getAPIBase() + f;
-      faceList.push(img);
-      lastFace = hametsu.Face.getAPIBase() + f;
+      faceList.shift();
+      var faceUrl = hametsu.Face.getAPIBase() + f;
+      faceList.push(faceUrl);
+      lastFace = faceUrl;
     });
     initObjects(lastFace);
   }
-
     
 
   function drawScene() {

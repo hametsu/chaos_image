@@ -5,7 +5,7 @@
     start : canvasStart
   }
 
-  const MAX_FACE_NUM = 300;
+  const MAX_FACE_NUM = 3;
   const INTERVAL = 33;
   var ctx;
   var WIDTH;
