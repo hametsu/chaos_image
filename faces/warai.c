@@ -216,12 +216,12 @@ void draw_warai(IplImage* img, CvSeq* faces)
 		cvWarpAffine(img, warai_scale, rotmat, 0, cvScalarAll(0));
 
 		//filter
-		if(hist_filter(filter_image, resized) < 0.1)
-		{
-			if (count % 12 == 0) {
-				char filename[256];
-				sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
-				cvResize(img, resized, CV_INTER_CUBIC);
+		if (count % 12 == 0) {
+			char filename[256];
+			sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
+			cvResize(img, resized, CV_INTER_CUBIC);
+			if(hist_filter(filter_image, resized) < 0)
+			{
 				cvSaveImage(filename, resized, 0);
 			}
 		}
@@ -312,5 +312,5 @@ double hist_filter(IplImage* src1, IplImage* src2)
 		cvReleaseImage(&dst1[i]);
 		cvReleaseImage(&dst2[i]);
 	}
-	return cvCompareHist( hist1, hist2, CV_COMP_INTERSECT);
+	return cvCompareHist( hist1, hist2, CV_COMP_CORREL);
 }
