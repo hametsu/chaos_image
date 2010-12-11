@@ -5,7 +5,7 @@
     start : canvasStart
   }
 
-  const MAX_FACE_NUM = 3;
+  const MAX_FACE_NUM = 200;
   const INTERVAL = 33;
   var ctx;
   var WIDTH;
@@ -25,6 +25,7 @@
     if ((ctx = canvas.getContext && canvas.getContext('2d'))) {
 
       faces.forEach(function(f, i) {
+        if (i > MAX_FACE_NUM) return;
         var img = new Image();
         img.src = hametsu.Face.getAPIBase() + f;
         imgs[i] = img;
