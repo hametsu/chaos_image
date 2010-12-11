@@ -220,9 +220,13 @@ void draw_warai(IplImage* img, CvSeq* faces)
 			char filename[256];
 			sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
 			cvResize(img, resized, CV_INTER_CUBIC);
-			if(hist_filter(filter_image, resized) < 0)
+			if(hist_filter(filter_image, resized) < 0.0)
 			{
 				cvSaveImage(filename, resized, 0);
+			}
+			else
+			{
+				printf("filtered\n");
 			}
 		}
 		cvCopy(warai_scale, img, NULL);
