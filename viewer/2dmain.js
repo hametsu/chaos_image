@@ -17,6 +17,8 @@
   var size = [];
   var imgs = [];
 
+  var newFaces = [];
+
   function canvasStart(canvasName, faces) {
     var canvas = document.getElementById(canvasName);
     WIDTH = $(canvas).width();
@@ -78,6 +80,10 @@
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
     ctx.globalCompositeOperation = "lighter";
 
+    var tmpSize;
+    var tmpX;
+    var tmpY;
+
     for (var i=0, len=imgs.length; i<len; i++) {
       locX[i] += speedX[i];
       locY[i] += speedY[i];
@@ -89,7 +95,18 @@
       if(locY[i] < 0 || locY[i] > HEIGHT){
         speedY[i] *= -1.0;
       }
-      ctx.drawImage(imgs[i], locX[i], locY[i], size[i], size[i])
+
+      tmpSize = size[i];
+      tmpX = locX[i];
+      tmpY = locY[i];
+
+      if (i > len-11) {
+        tmpSize = tmpSize + 50 + Math.random()*10;
+        var tt = len-i;
+        tmpX = tt*100%WIDTH + Math.random()*5;
+        tmpY = tt*100%HEIGHT + Math.random()*5;
+      }
+      ctx.drawImage(imgs[i], tmpX, tmpY, tmpSize, tmpSize)
     }
   }
 })(window.hametsu);
