@@ -5,6 +5,8 @@ all:	warai
 run:	warai
 	#./warai --cascade=haarcascade_frontalface_alt2.xml 0
 	while : ; do ./warai ; done
+server:	
+	cd images && ruby app.rb
 clean:
 	rm warai
 
