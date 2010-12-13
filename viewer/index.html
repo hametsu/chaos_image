@@ -7,6 +7,7 @@
     <script type="text/javascript" src="./asyncqueue.js"></script>
     <script type="text/javascript" src="../common_lib/3rdparty/sylvester.js"></script>
     <script type="text/javascript" src="../common_lib/3rdparty/glUtils.js"></script>
+    <script type="text/javascript" src="../common_lib/3rdparty/webgl-debug.js"></script>
     <script type="text/javascript" src="../common_lib/gl.js"></script>
     <script type="text/javascript" src="../common_lib/face.js"></script>
 
@@ -103,7 +104,7 @@ void main(void)
     float cLength = length(cPos);
 
     vec2 uv = gl_FragCoord.xy/resolution.xy+(cPos/cLength)*sin(cLength/30.0-time*10.0)/25.0;
-    vec3 col = texture2D(tex0,uv).xyz*50.0/cLength;
+    vec3 col = texture2D(tex0,uv).xyz*50.0/cLength + 0.2;
 
     gl_FragColor = vec4(col,1.0);
 }
@@ -235,7 +236,7 @@ void main(void)
   <script type="text/javascript" src="./2dmain.js"></script>
   <style>
     body {
-      background-color:#000 
+      background-color:#333 
 
     }
     canvas {
@@ -247,7 +248,9 @@ void main(void)
   </style>
   </head>
   <body>
-    <canvas id="3d" style="z-index:0" width="800" height="640"></canvas> 
-    <canvas id="2d" style="z-index:1" width="800" height="640"></canvas>
+    <!--
+    <canvas id="3d" style="z-index:0" width="100%" height="100%"></canvas> 
+    <canvas id="2d" style="z-index:1" width="100%" height="100%"></canvas>
+    -->
   </body>
 </html>
