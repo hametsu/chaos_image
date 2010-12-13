@@ -167,9 +167,7 @@ CvSeq* detect_face(IplImage* img)
 	if( cascade )
 	{
 		double t = (double)cvGetTickCount();
-		CvSeq* faces = cvHaarDetectObjects( small_img, cascade, storage,
-															1.1, 2, 0/*CV_HAAR_DO_CANNY_PRUNING*/,
-															cvSize(200, 200) );
+		CvSeq* faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0/*CV_HAAR_DO_CANNY_PRUNING*/, cvSize(200, 200), cvSize(600,600) );
 		t = (double)cvGetTickCount() - t;
 		printf( "detection time = %gms\n", t/((double)cvGetTickFrequency()*1000.) );
 		cvReleaseImage( &gray );
