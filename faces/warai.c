@@ -18,8 +18,6 @@
 static CvMemStorage* storage = 0;
 static CvHaarClassifierCascade* cascade = 0;
 int angle = 0;
-int hist_size = 256;
-IplImage *filter_image;
 
 CvSeq* detect_face(IplImage* img);
 void draw_warai(IplImage* img, CvSeq* faces);
@@ -39,9 +37,6 @@ int main( int argc, char** argv )
 	int optlen = strlen("--cascade=");
 	const char* input_name;
 	CvSeq* faces;
-
-	//loading image for filter
-	filter_image = cvLoadImage("filter.jpg", 1);
 
 	if( argc > 1 && strncmp( argv[1], "--cascade=", optlen ) == 0 )
 		{
@@ -180,7 +175,6 @@ CvSeq* detect_face(IplImage* img)
 		cvReleaseImage( &gray );
 		cvReleaseImage( &small_img );
 		return faces;
-		cvReleaseImage( &filter_image );
 	}
 }
 
@@ -217,16 +211,16 @@ void draw_warai(IplImage* img, CvSeq* faces)
 		//filter
 		if (count % 12 == 0) {
 			char filename[256];
-			sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
 			cvResize(img, resized, CV_INTER_CUBIC);
-			if(hadairo_filter(resized) >= 0.4)
+			if(hadairo_filter(resized) >= 0.2)
 			{
-				cvSaveImage(filename, resized, 0);
+				sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
 			}
 			else
 			{
-				printf("filtered\n");
+				sprintf(filename, "./filtered/face%02d_%ld.jpg", i, time(NULL));
 			}
+			cvSaveImage(filename, resized, 0);
 		}
 		cvCopy(warai_scale, img, NULL);
 		cvResetImageROI(img);
