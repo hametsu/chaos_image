@@ -169,7 +169,7 @@ CvSeq* detect_face(IplImage* img)
 	if( cascade )
 	{
 		double t = (double)cvGetTickCount();
-		CvSeq* faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0/*CV_HAAR_DO_CANNY_PRUNING*/, cvSize(100, 100), cvSize(600,600) );
+		CvSeq* faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0/*CV_HAAR_DO_CANNY_PRUNING*/, cvSize(75, 75), cvSize(600,600) );
 		t = (double)cvGetTickCount() - t;
 		printf( "detection time = %gms\n", t/((double)cvGetTickFrequency()*1000.) );
 		cvReleaseImage( &gray );
@@ -209,10 +209,10 @@ void draw_warai(IplImage* img, CvSeq* faces)
 		cvWarpAffine(img, warai_scale, rotmat, 0, cvScalarAll(0));
 
 		//filter
-		if (count % 12 == 0) {
+		if (count % 10 == 0) {
 			char filename[256];
 			cvResize(img, resized, CV_INTER_CUBIC);
-			if(hadairo_filter(resized) >= 0.4)
+			if(hadairo_filter(resized) >= 0.2)
 			{
 				sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
 			}
@@ -317,16 +317,16 @@ double hadairo_filter(IplImage* src)
 	IplImage *hsvImage = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 3);
 	IplImage *hImage = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
 	IplImage *tThreshold = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
-    IplImage *bThreshold = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
-    IplImage *rThreshold = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
+	IplImage *bThreshold = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
+	IplImage *rThreshold = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
 	int from_to[] = {0, 0};
 	double result;
 	//get hue
 	cvCvtColor(src, hsvImage, CV_BGR2HSV);
 	cvMixChannels((const CvArr**)&hsvImage, 1, (CvArr**)&hImage, 1, from_to, 1);
 	//pick up hadairo
-	cvThreshold(hImage, bThreshold, 0, 255, CV_THRESH_BINARY);
-	cvThreshold(hImage, tThreshold, 27, 255, CV_THRESH_BINARY_INV);
+	cvThreshold(hImage, bThreshold, 15, 255, CV_THRESH_BINARY);
+	cvThreshold(hImage, tThreshold, 40, 255, CV_THRESH_BINARY_INV);
 	cvAnd(bThreshold, tThreshold, rThreshold, NULL);
 	result = (double)cvCountNonZero(rThreshold)/(src->width * src->height);
 	//end
