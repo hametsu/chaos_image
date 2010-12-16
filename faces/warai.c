@@ -212,7 +212,7 @@ void draw_warai(IplImage* img, CvSeq* faces)
 		if (count % 12 == 0) {
 			char filename[256];
 			cvResize(img, resized, CV_INTER_CUBIC);
-			if(hadairo_filter(resized) >= 0.2)
+			if(hadairo_filter(resized) >= 0.4)
 			{
 				sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
 			}
@@ -320,18 +320,20 @@ double hadairo_filter(IplImage* src)
     IplImage *bThreshold = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
     IplImage *rThreshold = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
 	int from_to[] = {0, 0};
+	double result;
 	//get hue
 	cvCvtColor(src, hsvImage, CV_BGR2HSV);
 	cvMixChannels((const CvArr**)&hsvImage, 1, (CvArr**)&hImage, 1, from_to, 1);
 	//pick up hadairo
 	cvThreshold(hImage, bThreshold, 0, 255, CV_THRESH_BINARY);
-	cvThreshold(hImage, tThreshold, 15, 255, CV_THRESH_BINARY_INV);
+	cvThreshold(hImage, tThreshold, 27, 255, CV_THRESH_BINARY_INV);
 	cvAnd(bThreshold, tThreshold, rThreshold, NULL);
+	result = (double)cvCountNonZero(rThreshold)/(src->width * src->height);
 	//end
 	cvReleaseImage(&hsvImage);
 	cvReleaseImage(&hImage);
 	cvReleaseImage(&tThreshold);
 	cvReleaseImage(&bThreshold);
 	cvReleaseImage(&rThreshold);
-	return (double)cvCountNonZero(rThreshold)/(src->width * src->height);
+	return result;
 }
