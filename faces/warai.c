@@ -333,5 +333,11 @@ double hadairo_filter(IplImage* src)
 	cvThreshold(hImage, bThreshold, 0, 255, CV_THRESH_BINARY);
 	cvThreshold(hImage, tThreshold, 15, 255, CV_THRESH_BINARY_INV);
 	cvAnd(bThreshold, tThreshold, rThreshold, NULL);
+	//end
+	cvReleaseImage(&hsvImage);
+	cvReleaseImage(&hImage);
+	cvReleaseImage(&tThreshold);
+	cvReleaseImage(&bThreshold);
+	cvReleaseImage(&rThreshold);
 	return (double)cvCountNonZero(rThreshold)/(src->width * src->height);
 }
