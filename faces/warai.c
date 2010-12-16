@@ -25,6 +25,7 @@ CvSeq* detect_face(IplImage* img);
 void draw_warai(IplImage* img, CvSeq* faces);
 int detect_same_face( IplImage* img, IplImage* img_old, CvRect facearea );
 double hist_filter(IplImage* src1, IplImage* src2);
+double hadairo_filter(IplImage* img);
 
 const char* cascade_name =
 	"haarcascade_frontalface_alt.xml";
@@ -218,7 +219,7 @@ void draw_warai(IplImage* img, CvSeq* faces)
 			char filename[256];
 			sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
 			cvResize(img, resized, CV_INTER_CUBIC);
-			if(hist_filter(filter_image, resized) < 0.0)
+			if(hadairo_filter(resized) >= 0.4)
 			{
 				cvSaveImage(filename, resized, 0);
 			}
@@ -315,4 +316,22 @@ double hist_filter(IplImage* src1, IplImage* src2)
 		cvReleaseImage(&dst2[i]);
 	}
 	return cvCompareHist( hist1, hist2, CV_COMP_CORREL);
+}
+
+double hadairo_filter(IplImage* src)
+{
+	IplImage *hsvImage = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 3);
+	IplImage *hImage = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
+	IplImage *tThreshold = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
+    IplImage *bThreshold = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
+    IplImage *rThreshold = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
+	int from_to[] = {0, 0};
+	//get hue
+	cvCvtColor(src, hsvImage, CV_BGR2HSV);
+	cvMixChannels(&hsvImage, 1, &hImage, 1, from_to, 1);
+	//pick up hadairo
+	cvThreshold(hImage, bThreshold, 4, 255, CV_THRESH_BINARY);
+	cvThreshold(hImage, tThreshold, 27, 255, CV_THRESH_BINARY_INV);
+	cvAnd(bThreshold, tThreshold, rThreshold, NULL);
+	return (double)cvCountNonZero(rThreshold)/(src->width * src->height);
 }
