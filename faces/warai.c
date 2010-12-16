@@ -328,10 +328,10 @@ double hadairo_filter(IplImage* src)
 	int from_to[] = {0, 0};
 	//get hue
 	cvCvtColor(src, hsvImage, CV_BGR2HSV);
-	cvMixChannels(&hsvImage, 1, &hImage, 1, from_to, 1);
+	cvMixChannels((const CvArr**)&hsvImage, 1, (CvArr**)&hImage, 1, from_to, 1);
 	//pick up hadairo
-	cvThreshold(hImage, bThreshold, 4, 255, CV_THRESH_BINARY);
-	cvThreshold(hImage, tThreshold, 27, 255, CV_THRESH_BINARY_INV);
+	cvThreshold(hImage, bThreshold, 0, 255, CV_THRESH_BINARY);
+	cvThreshold(hImage, tThreshold, 15, 255, CV_THRESH_BINARY_INV);
 	cvAnd(bThreshold, tThreshold, rThreshold, NULL);
 	return (double)cvCountNonZero(rThreshold)/(src->width * src->height);
 }
