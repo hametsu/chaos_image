@@ -212,7 +212,7 @@ void draw_warai(IplImage* img, CvSeq* faces)
 		if (count % 10 == 0) {
 			char filename[256];
 			cvResize(img, resized, CV_INTER_CUBIC);
-			if(hadairo_filter(resized) >= 0.2)
+			if(hadairo_filter(resized) >= 0.3)
 			{
 				sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
 			}
@@ -325,8 +325,8 @@ double hadairo_filter(IplImage* src)
 	cvCvtColor(src, hsvImage, CV_BGR2HSV);
 	cvMixChannels((const CvArr**)&hsvImage, 1, (CvArr**)&hImage, 1, from_to, 1);
 	//pick up hadairo
-	cvThreshold(hImage, bThreshold, 15, 255, CV_THRESH_BINARY);
-	cvThreshold(hImage, tThreshold, 40, 255, CV_THRESH_BINARY_INV);
+	cvThreshold(hImage, bThreshold, 5, 255, CV_THRESH_BINARY);
+	cvThreshold(hImage, tThreshold, 20, 255, CV_THRESH_BINARY_INV);
 	cvAnd(bThreshold, tThreshold, rThreshold, NULL);
 	result = (double)cvCountNonZero(rThreshold)/(src->width * src->height);
 	//end
