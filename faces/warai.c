@@ -22,6 +22,8 @@ int angle = 0;
 CvSeq* detect_face(IplImage* img);
 void draw_warai(IplImage* img, CvSeq* faces);
 int detect_same_face( IplImage* img, IplImage* img_old, CvRect facearea );
+double hist_filter(IplImage* src1, IplImage* src2);
+double hadairo_filter(IplImage* img);
 
 const char* cascade_name =
 	"haarcascade_frontalface_alt.xml";
@@ -167,9 +169,7 @@ CvSeq* detect_face(IplImage* img)
 	if( cascade )
 	{
 		double t = (double)cvGetTickCount();
-		CvSeq* faces = cvHaarDetectObjects( small_img, cascade, storage,
-															1.1, 2, 0/*CV_HAAR_DO_CANNY_PRUNING*/,
-															cvSize(200, 200) );
+		CvSeq* faces = cvHaarDetectObjects( small_img, cascade, storage, 1.1, 2, 0/*CV_HAAR_DO_CANNY_PRUNING*/, cvSize(75, 75), cvSize(600,600) );
 		t = (double)cvGetTickCount() - t;
 		printf( "detection time = %gms\n", t/((double)cvGetTickFrequency()*1000.) );
 		cvReleaseImage( &gray );
@@ -208,10 +208,18 @@ void draw_warai(IplImage* img, CvSeq* faces)
 		cvSetImageROI(img, roi);
 		cvWarpAffine(img, warai_scale, rotmat, 0, cvScalarAll(0));
 
-		if (count % 12 == 0) {
+		//filter
+		if (count % 10 == 0) {
 			char filename[256];
-			sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
 			cvResize(img, resized, CV_INTER_CUBIC);
+			if(hadairo_filter(resized) >= 0.3)
+			{
+				sprintf(filename, "./images/face%02d_%ld.jpg", i, time(NULL));
+			}
+			else
+			{
+				sprintf(filename, "./filtered/face%02d_%ld.jpg", i, time(NULL));
+			}
 			cvSaveImage(filename, resized, 0);
 		}
 		cvCopy(warai_scale, img, NULL);
@@ -259,4 +267,73 @@ int detect_same_face( IplImage* img, IplImage* img_old, CvRect facearea ) {
 	dy /= i*j;
 	printf("%d %d %d\n", dx, dy, i*j);
 	return 0;
+}
+
+double hist_filter(IplImage* src1, IplImage* src2)
+{
+	IplImage *dst1[4] = {0, 0, 0, 0}, *dst2[4] = {0, 0, 0, 0};
+	CvHistogram *hist1, *hist2;
+	int sch1 = 0, sch2 = 0;
+	int hist_size = 256;
+	float range_0[] = { 0, 256 };
+	float *ranges[] = { range_0 };
+	int i;
+
+	sch1 = src1->nChannels;
+	sch2 = src2->nChannels;
+	if(sch1 != sch2){
+		return -1;
+	}
+
+	for(i=0;i<sch1;i++) {
+		dst1[i] = cvCreateImage (cvSize (src1->width, src1->height), src1->depth, 1);
+		dst2[i] = cvCreateImage (cvSize (src2->width, src2->height), src2->depth, 1);
+	}
+
+	hist1 = cvCreateHist (1, &hist_size, CV_HIST_ARRAY, ranges, 1);
+	hist2 = cvCreateHist (1, &hist_size, CV_HIST_ARRAY, ranges, 1);
+
+	if (sch1 == 1) {
+		cvCopy (src1, dst1[0], NULL);
+		cvCopy (src2, dst2[0], NULL);
+	}else{
+		cvSplit (src1, dst1[0], dst1[1], dst1[2], dst1[3]);
+		cvSplit (src2, dst2[0], dst2[1], dst2[2], dst2[3]);
+	}
+
+	for(i= 0;i<sch1;i++){
+		cvCalcHist (&dst1[i], hist1, 0, NULL);
+		cvCalcHist (&dst2[i], hist2, 0, NULL);
+		cvNormalizeHist(hist1, 1.0);
+		cvNormalizeHist(hist2, 1.0);
+		cvReleaseImage(&dst1[i]);
+		cvReleaseImage(&dst2[i]);
+	}
+	return cvCompareHist( hist1, hist2, CV_COMP_CORREL);
+}
+
+double hadairo_filter(IplImage* src)
+{
+	IplImage *hsvImage = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 3);
+	IplImage *hImage = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
+	IplImage *tThreshold = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
+	IplImage *bThreshold = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
+	IplImage *rThreshold = cvCreateImage(cvSize(src->width, src->height), IPL_DEPTH_8U, 1);
+	int from_to[] = {0, 0};
+	double result;
+	//get hue
+	cvCvtColor(src, hsvImage, CV_BGR2HSV);
+	cvMixChannels((const CvArr**)&hsvImage, 1, (CvArr**)&hImage, 1, from_to, 1);
+	//pick up hadairo
+	cvThreshold(hImage, bThreshold, 5, 255, CV_THRESH_BINARY);
+	cvThreshold(hImage, tThreshold, 20, 255, CV_THRESH_BINARY_INV);
+	cvAnd(bThreshold, tThreshold, rThreshold, NULL);
+	result = (double)cvCountNonZero(rThreshold)/(src->width * src->height);
+	//end
+	cvReleaseImage(&hsvImage);
+	cvReleaseImage(&hImage);
+	cvReleaseImage(&tThreshold);
+	cvReleaseImage(&bThreshold);
+	cvReleaseImage(&rThreshold);
+	return result;
 }
