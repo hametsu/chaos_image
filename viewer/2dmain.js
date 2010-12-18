@@ -6,36 +6,39 @@
   }
 
   const MAX_FACE_NUM = 200;
-  const INTERVAL = 33;
+  const INTERVAL = 40;
   var ctx;
   var WIDTH;
   var HEIGHT;
-  var speedX = [];
-  var speedY = [];
-  var locX = [];
-  var locY = [];
-  var size = [];
-  var imgs = [];
+  var faces = [];
+
+  function createFace(config) {
+    return {
+      img : config.img,
+      speedX : config.speedX || Math.random() * 8.0 - 4.0,
+      speedY : config.speedY || Math.random() * 8.0 - 4.0,
+      locX : config.locX || WIDTH / 2,
+      locY : config.locY || HEIGHT / 2,
+      size : config.size || Math.random() * 40.0 + 20.0
+    }
+  }
 
   var newFaces = [];
 
-  function canvasStart(canvasName, faces) {
+  function canvasStart(canvasName, initialFaceData) {
     var canvas = document.getElementById(canvasName);
     WIDTH = $(canvas).width();
     HEIGHT = $(canvas).height();
 
     if ((ctx = canvas.getContext && canvas.getContext('2d'))) {
 
-      faces.forEach(function(f, i) {
+      initialFaceData.forEach(function(f, i) {
         if (i > MAX_FACE_NUM) return;
         var img = new Image();
         img.src = hametsu.Face.getAPIBase() + f;
-        imgs[i] = img;
-        speedX[i] = Math.random() * 8.0 - 4.0;
-        speedY[i] = Math.random() * 8.0 - 4.0;
-        locX[i] = WIDTH / 2;
-        locY[i] = HEIGHT / 2;
-        size[i] = Math.random() * 40.0 + 20.0;
+        faces.push(createFace({
+          img : img
+        }));
       });
 
       console.info('Initial Face count:', faces.length);
@@ -53,21 +56,13 @@
       console.info('add image:', f);
       var img = new Image();
       img.src = hametsu.Face.getAPIBase() + f;
-      imgs.push(img);
-      speedX.push(Math.random() * 8.0 - 4.0);
-      speedY.push(Math.random() * 8.0 - 4.0);
-      locX.push(WIDTH / 2);
-      locY.push(HEIGHT / 2);
-      size.push(Math.random() * 40.0 + 20.0);
+      faces.push(createFace({
+        img : img
+      }));
 
-      if (imgs.length > MAX_FACE_NUM) {
+      if (faces.length > MAX_FACE_NUM) {
         console.info('reduce images!!!!!!!!');
-        imgs.shift();
-        speedX.shift();
-        speedY.shift();
-        locX.shift();
-        locY.shift();
-        size.shift();
+        faces.shift();
       }
     });
   }
@@ -83,22 +78,24 @@
     var tmpSize;
     var tmpX;
     var tmpY;
+    var face;
 
-    for (var i=0, len=imgs.length; i<len; i++) {
-      locX[i] += speedX[i];
-      locY[i] += speedY[i];
+    for (var i=0, len=faces.length; i<len; i++) {
+      face = faces[i];
+      face.locX += face.speedX;
+      face.locY += face.speedY;
 
-      if(locX[i] < 0 || locX[i] > WIDTH){
-        speedX[i] *= -1.0;
+      if(face.locX < 0 || face.locX > WIDTH - face.size){
+        face.speedX *= -1.0;
       }
 
-      if(locY[i] < 0 || locY[i] > HEIGHT){
-        speedY[i] *= -1.0;
+      if(face.locY < 0 || face.locY > HEIGHT - face.size){
+        face.speedY *= -1.0;
       }
 
-      tmpSize = size[i];
-      tmpX = locX[i];
-      tmpY = locY[i];
+      tmpSize = face.size;
+      tmpX = face.locX;
+      tmpY = face.locY;
 
       if (i > len-11) {
         tmpSize = tmpSize + 50 + Math.random()*10;
@@ -106,7 +103,8 @@
         tmpX = tt*100%WIDTH + Math.random()*5;
         tmpY = tt*100%HEIGHT + Math.random()*5;
       }
-      ctx.drawImage(imgs[i], tmpX, tmpY, tmpSize, tmpSize)
+      //console.info('drawImage', face.img.src, tmpX, tmpY, tmpSize, tmpSize);
+      ctx.drawImage(face.img, tmpX, tmpY, tmpSize, tmpSize)
     }
   }
 })(window.hametsu);
