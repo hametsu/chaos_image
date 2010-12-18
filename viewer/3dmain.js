@@ -13,7 +13,7 @@
 
   var GLC = hametsu.GLCommon;
   var gl;
-  var shaderProgram;
+  var shaderProgram; // CurrentShader
   var faceList;
 
   var fShaders = [
@@ -24,11 +24,13 @@
     'shader-fs5'
   ];
 
-  function initShaders(idx) {
+  var shaderPrograms = [];
+
+  function rotateShaders(idx) {
     var idx = idx || 0;
 
     if (idx == 0) {
-      _initShaders(idx);
+      changeShader(idx);
       idx++;
     }
 
@@ -41,7 +43,7 @@
       delay : 10000
     });
     queue.push({
-      fn : _initShaders,
+      fn : changeShader,
       args : [idx]
     });
     queue.push(initObjects);
@@ -52,30 +54,36 @@
       callback : function(){}
     });
     queue.push({
-      fn : initShaders,
+      fn : rotateShaders,
       args : [++idx]
     });
-
   }
 
-  function _initShaders(idx) {
-    console.info('_initShaddres', idx);
-    var idx = idx%fShaders.length;
+  function changeShader(idx) {
+    console.info('start : cangeShader', idx);
+    var idx = idx%shaderPrograms.length;
     console.info(idx);
-    var fragmentShader = GLC.getShader(gl, fShaders[idx]);
-    var vertexShader = GLC.getShader(gl, "shader-vs");
+    var nextShader = shaderPrograms[idx];
+    gl.useProgram(nextShader);
+    shaderProgram = nextShader;
+  }
 
-    shaderProgram = gl.createProgram();
-    gl.attachShader(shaderProgram, vertexShader);
-    gl.attachShader(shaderProgram, fragmentShader);
-    gl.linkProgram(shaderProgram);
+  function initShaders() {
+    console.info('start : initShaddres');
 
-    if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-      alert("Could not initialise shaders");
-    }
-    gl.linkProgram(shaderProgram);
-    gl.useProgram(shaderProgram);
-
+    fShaders.forEach(function(fShader) {
+      var fragmentShader = GLC.getShader(gl, fShader);
+      var vertexShader = GLC.getShader(gl, "shader-vs");
+      var sp = gl.createProgram();
+      gl.attachShader(sp, vertexShader);
+      gl.attachShader(sp, fragmentShader);
+      gl.linkProgram(sp);
+      if (!gl.getProgramParameter(sp, gl.LINK_STATUS)) {
+        alert("Could not initialise shaders");
+      }
+      shaderPrograms.push(sp);
+    });
+    changeShader(0);
   }
 
 
@@ -212,6 +220,7 @@
     faceList = faces;
     gl = GLC.initGL(canvasId);
     initShaders();
+    rotateShaders();
     initObjects();
 
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
