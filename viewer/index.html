@@ -10,6 +10,8 @@
     <script type="text/javascript" src="../common_lib/3rdparty/webgl-debug.js"></script>
     <script type="text/javascript" src="../common_lib/gl.js"></script>
     <script type="text/javascript" src="../common_lib/face.js"></script>
+    <script type="text/javascript" src="./wsmessage.js"></script>
+    <script type="text/javascript" src="./kinect.js"></script>
 
 
 <script id="shader-fs1" type="x-shader/x-fragment"> 
@@ -245,12 +247,39 @@ void main(void)
       top : 0;
       left : 0;
     }
+    div#imgHolder {
+      z-index : 3; 
+      position : absolute;
+      top : 0;
+      left : 0;
+      overflow : hidden;
+    }
+
+  @-webkit-keyframes slideIn {
+    0% { margin-top : -150px; left : 0px; }
+    100% { margin-top : 20px; left : 0px; }
+  }
+
+    #imgHolder img {
+      display : block;
+      margin : 20px;
+      border : 1px solid #FFF;
+      width : 100px;
+      -webkit-border-top-left-radius: 10px;
+      -webkit-border-top-right-radius: 10px;
+      -webkit-border-bottom-right-radius: 10px;
+      -webkit-border-bottom-left-radius: 10px;
+
+      -webkit-animation-timing-function: ease-out;
+      -webkit-animation-iteration-count: 1;
+      -webkit-animation-name: slideIn;
+      -webkit-animation-duration: 1s;
+    }
+
+
   </style>
   </head>
   <body>
-    <!--
-    <canvas id="3d" style="z-index:0" width="100%" height="100%"></canvas> 
-    <canvas id="2d" style="z-index:1" width="100%" height="100%"></canvas>
-    -->
+    <div id="imgHolder"></div>
   </body>
 </html>

@@ -17,10 +17,9 @@
   var faceList;
 
   var fShaders = [
-    'shader-fs3',
-    'shader-fs1',
-    'shader-fs2',
-    'shader-fs4',
+    //'shader-fs1',
+    //'shader-fs2',
+    //'shader-fs4',
     'shader-fs5'
   ];
 
