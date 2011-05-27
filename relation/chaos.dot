@@ -1,20 +1,20 @@
 digraph Chaos {
-	node [fontname="MSUIGOTHIC.ttf"];
-	Theoria   -> Theoria  [label = "合法"];
-	梅ラボ    -> 藤城嘘   [label = "ゴムはつけた方が良いよ。"];
-	梅ラボ    -> 西田さん [label = "美人ですよね。"];
-	梅ラボ -> "愛ちゃん(mimi)" [label = "ずっと好きだったんだぜ♪"];
-	藤城嘘   -> 梅ラボ   [label = "ｗｗｗうぇｗ"];
-	西田さん -> 梅ラボ   [label = "あわよくば？"];
-	西田さん -> 黒瀬陽平 [label = "信用できない。"];
-	黒瀬陽平 -> 西田さん [label = "今度こそ愛す。"];
+  node [fontname="MSUIGOTHIC.ttf"];
+  Theoria   -> Theoria  [label = "合法"];
+  梅ラボ    -> 藤城嘘   [label = "ゴムはつけた方が良いよ。"];
+  梅ラボ    -> 西田さん [label = "美人ですよね。"];
+  梅ラボ -> "愛ちゃん(mimi)" [label = "ずっと好きだったんだぜ♪"];
+  藤城嘘   -> 梅ラボ   [label = "ｗｗｗうぇｗ"];
+  西田さん -> 梅ラボ   [label = "あわよくば？"];
+  西田さん -> 黒瀬陽平 [label = "信用できない。"];
+  黒瀬陽平 -> 西田さん [label = "今度こそ愛す。"];
   黒瀬陽平 -> 小林銅蟲 [label = "お前がとこちゃん危険に晒してんだろ死ねクソ"];
-	"愛ちゃん(mimi)" -> 梅ラボ [label = "お付き合い。♥"];
-	糸柳和法 -> 梅ラボ  [label = "殺す"];
-	糸柳和法 -> 藤城嘘   [label = "殺す"];
-	糸柳和法 -> 黒瀬陽平 [label = "殺す"];
-	糸柳和法 -> 西田さん [label = "殺す"];
-	糸柳和法 -> "愛ちゃん(mimi)" [label = "殺す"];
+  "愛ちゃん(mimi)" -> 梅ラボ [label = "お付き合い。♥"];
+  糸柳和法 -> 梅ラボ  [label = "殺す"];
+  糸柳和法 -> 藤城嘘   [label = "殺す"];
+  糸柳和法 -> 黒瀬陽平 [label = "殺す"];
+  糸柳和法 -> 西田さん [label = "殺す"];
+  糸柳和法 -> "愛ちゃん(mimi)" [label = "殺す"];
   糸柳和法 -> 四日市 [label = "好き"];
   糸柳和法 -> VoQn [label = "好き"];
   糸柳和法 -> mala [label = "複雑な感情"];
@@ -35,11 +35,11 @@ digraph Chaos {
   四日市 -> なほるる [label = "お付き合い"];
   四日市 -> 糸柳和法 [label = "好き"];
   VoQn -> 糸柳和法 [label = "好き"];
-	subgraph cluster_main_culprits {
-		 style = filled;
-		 color = lightgrey;
-		 // see also http://graphviz.org/content/cluster
-	}
-	label = "Chaos Lounge Relation Diagram drawn by ARAKAWA Tomonori\nThe code of this diagram and itself are distributed under HAMETSU license.";
+  subgraph cluster_hoge {
+    style = filled;
+    color = lightgrey;
+    // see also http://graphviz.org/content/cluster
+  }
+  label = "Chaos Lounge Relation Diagram drawn by ARAKAWA Tomonori\nThe code of this diagram and itself are distributed under HAMETSU license.";
 }
 
