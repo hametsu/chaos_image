@@ -1,0 +1,4 @@
+digraph Chaos {
+	node [fontname="MSUIGOTHIC.ttf"];
+	梅ラボ -> 藤城嘘;
+}
