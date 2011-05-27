@@ -10,14 +10,16 @@ endif
 %.pdf:	%.dot
 	dot $< -Tpdf -o $@
 
-all:
-	dot chaos.dot -Tpng -o chaos.png
+default:	view
 
 pdf:
 	dot chaos.dot -Tpdf -o chaos.pdf
 
 view:	chaos.pdf
 	${OPEN} chaos.pdf
+
+clean:
+	rm *.pdf *.png
 
 up:	chaos.png
 	curl -F imagedata=@./chaos.png -F id=kogaidan -H "Expect:" http://gyazo.com/upload.cgi -v
