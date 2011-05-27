@@ -16,6 +16,7 @@ digraph Chaos {
   黒瀬陽平 -> 助田（OSSAN） [label =  "片腕"];
   助田（OSSAN） -> 黒瀬陽平 [label = "補佐"];
   助田（OSSAN） -> 飯 [label = "大好き!!!"];
+  飯 -> 助田（OSSAN） [label = "大好き!!!"];
   愛ちゃん（mimi） -> 梅ラボ [label = "お付き合い♥"];
   糸柳和法 -> 梅ラボ  [label = "殺す", fontsize=30, fontcolor="red"];
   糸柳和法 -> 藤城嘘   [label = "殺す", fontsize=30, fontcolor="red"];
