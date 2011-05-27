@@ -45,6 +45,7 @@ digraph Chaos {
   小池陸 -> niryuu [label = "合法やめろ"];
   niryuu -> 小池陸 [label = "合法は修行"];
   niryuu -> niryuu [label = "合法"];
+  niryuu -> Theoria [label = "焚きすぎてエクストリームや"];
   subgraph cluster_hoge {
     style = filled;
     color = lightgrey;
