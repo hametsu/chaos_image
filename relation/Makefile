@@ -4,6 +4,12 @@ else
 	OPEN=open
 endif
 
+ifeq ($(OSTYPE),darwin10.0)
+	VIEW_TARGET=chaos.svg
+else
+	VIEW_TARGET=chaos.pdf
+endif
+
 %.png:	%.dot
 	dot $< -Tpng -o $@
 
@@ -18,8 +24,8 @@ default:	view
 pdf:
 	dot chaos.dot -Tpdf -o chaos.pdf
 
-view:	chaos.pdf
-	${OPEN} chaos.pdf
+view:	${VIEW_TARGET}
+	${OPEN} $<
 
 clean:
 	rm *.pdf *.png
