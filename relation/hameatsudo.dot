@@ -2,6 +2,7 @@ digraph Hameatsudo {
   graph [concentrate = true];
   overlap=orthoxy;
   "@tks" -> "@todesking" [label = "社のグロ好きエンジニア"];
+  "@takano32" -> "@tks" [label = "広報仲間"];
   "@takano32" -> "@todesking" [label = "同僚"];
   "@takano32" -> "@hagino3000" [label = "かわいい♥"];
   "@takano32" -> "@niryuu" [label = "酒"];
@@ -16,6 +17,7 @@ digraph Hameatsudo {
   "@niryuu" -> "@tomad" [label = "かわいい♥"];
   "@niryuu" -> "@takano32" [label = "酒"];
   "@niryuu" -> "@sskhybrid" [label = "糞便當"];
+  "@niryuu" -> "@yuiseki" [label = "ヒューマンコ"];
   "@itkz" -> "@todesking" [label = "グロ仲間"];
   "@itkz" -> "@yuiseki" [label = "おもしろの源泉"];
   "@yuiseki" -> "@niryuu" [label = "ヒューマンコ"];
