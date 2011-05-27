@@ -1,8 +1,13 @@
+ifeq ($(OSTYPE),linux-gnu)
+	OPEN=gnome-open
+else
+	OPEN=open
+endif
 
 %.png:	%.dot
 	dot $< -Tpng -o $@
 
-%.pdf:	%.pdf
+%.pdf:	%.dot
 	dot $< -Tpdf -o $@
 
 all:
@@ -12,7 +17,7 @@ pdf:
 	dot chaos.dot -Tpdf -o chaos.pdf
 
 view:	chaos.pdf
-	open chaos.pdf
+	${OPEN} chaos.pdf
 
 up:	chaos.png
 	curl -F imagedata=@./chaos.png -F id=kogaidan -H "Expect:" http://gyazo.com/upload.cgi -v
