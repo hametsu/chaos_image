@@ -44,6 +44,7 @@ digraph Chaos {
   糸柳和法 -> 四日市 [label = "好き"];
   糸柳和法 -> VoQn [label = "好き"];
   糸柳和法 -> 糸柳和法 [label = "修行"];
+  糸柳和法 -> Theoria [label = "お前も同じクズだが、俺が守る"]
   pha[group=ギークハウス東日本橋];
   pha -> 糸柳和法 [label = "ギークハウス"];
   pha -> pha [label = "修行"];
