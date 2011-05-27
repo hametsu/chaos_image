@@ -5,6 +5,7 @@ digraph Hameatsudo {
   "@takano32" -> "@todesking" [label = "同僚"];
   "@takano32" -> "@hagino3000" [label = "かわいい♥"];
   "@takano32" -> "@niryuu" [label = "酒"];
+  "@takano32" -> "@yosshibox" [label = "リア充っぽくてステキ"];
   "@todesking" -> "@tks" [label = "ムダに元気ダナー"];
   "@tomad" -> "@yuiseki" [label = "テクノロジー集団リーダー"];
   "@yosshibox"
@@ -14,7 +15,7 @@ digraph Hameatsudo {
   "@niryuu" -> "@hagino3000" [label = "かわいい♥"];
   "@niryuu" -> "@tomad" [label = "かわいい♥"];
   "@niryuu" -> "@takano32" [label = "酒"];
-  "@niryuu" -> "@takano32" [label = "糞便當"];
+  "@niryuu" -> "@sskhybrid" [label = "糞便當"];
   "@itkz" -> "@todesking" [label = "グロ仲間"];
   "@itkz" -> "@yuiseki" [label = "おもしろの源泉"];
   "@yuiseki" -> "@niryuu" [label = "ヒューマンコ"];
