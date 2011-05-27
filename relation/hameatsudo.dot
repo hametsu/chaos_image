@@ -8,6 +8,7 @@ digraph Hameatsudo {
   "@tomad" -> "@yuiseki" [label = "テクノロジー集団リーダー"];
   "@yosshibox"
   "@sskhybrid" -> "@itkz" [label = "1000年に一度の素材"];
+  "@sskhybrid" -> "@takano32" [label = "素材"];
   "@ymrl"
   "@niryuu" -> "@hagino3000" [label = "かわいい♥"];
   "@niryuu" -> "@tomad" [label = "かわいい♥"];
