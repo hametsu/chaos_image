@@ -2,7 +2,7 @@ digraph Chaos {
   Theoria   -> Theoria  [label = "合法"];
   Theoria   -> Theoria  [label = "酒"];
   Theoria   -> Theoria  [label = "リストカット"];
-  Theoria   -> Theoria  [label = "セックス（オナニー）"];
+  Theoria   -> Theoria  [label = "オナニー（エネマグラ）"];
   梅ラボ    -> 藤城嘘   [label = "ゴムはつけた方が良いよ。"];
   梅ラボ    -> 西田さん [label = "美人ですよね。"];
   梅ラボ -> "愛ちゃん(mimi)" [label = "ずっと好きだったんだぜ♪"];
