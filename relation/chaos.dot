@@ -2,5 +2,6 @@ digraph Chaos {
 	node [fontname="MSUIGOTHIC.ttf"];
 	梅ラボ -> 藤城嘘[label = "ゴムはつけた方が良いよ。"];
 	藤城嘘 -> 梅ラボ[label = "ｗｗｗうぇｗ"];
+	label = "Chaos Lounge Relation Diagram drawn by ARAKAWA Tomonori\nThe code of this diagram is distributed under HAMETSU license.";
 }
 
