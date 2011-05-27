@@ -1,7 +1,13 @@
 digraph Chaos {
 	node [fontname="MSUIGOTHIC.ttf"];
-	梅ラボ -> 藤城嘘[label = "ゴムはつけた方が良いよ。"];
-	藤城嘘 -> 梅ラボ[label = "ｗｗｗうぇｗ"];
-	label = "Chaos Lounge Relation Diagram drawn by ARAKAWA Tomonori\nThe code of this diagram is distributed under HAMETSU license.";
+	梅ラボ   -> 藤城嘘   [label = "ゴムはつけた方が良いよ。"];
+	藤城嘘   -> 梅ラボ   [label = "ｗｗｗうぇｗ"];
+	西田さん -> 梅ラボ   [label = "あわよくば？"];
+	梅ラボ   -> 西田さん [label = "美人ですよね。"];
+	黒瀬陽平 -> 西田さん [label = "今度こそ愛す。"];
+	西田さん -> 黒瀬陽平 [label = "信用できない。"];
+	"愛ちゃん(mimi)" -> 梅ラボ [label = "お付き合い"];
+	梅ラボ -> "愛ちゃん(mimi)" [label = "ずっと好きだったんだぜ"];
+	label = "Chaos Lounge Relation Diagram drawn by ARAKAWA Tomonori\nThe code of this diagram and itself are distributed under HAMETSU license.";
 }
 
