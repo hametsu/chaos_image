@@ -1,3 +1,5 @@
+TARGET=hameatsudo
+
 ifeq ($(OSTYPE),linux-gnu)
 	OPEN=gnome-open
 else
@@ -5,10 +7,11 @@ else
 endif
 
 ifeq ($(OSTYPE),darwin10.0)
-	VIEW_TARGET=chaos.svg
+	VIEW_TARGET=${TARGET}.svg
 else
-	VIEW_TARGET=chaos.pdf
+	VIEW_TARGET=${TARGET}.pdf
 endif
+
 
 %.png:	%.dot
 	dot $< -Tpng -o $@
@@ -22,7 +25,7 @@ endif
 default:	view
 
 pdf:
-	dot chaos.dot -Tpdf -o chaos.pdf
+	dot ${TARGET}.dot -Tpdf -o ${TARGET}.pdf
 
 view:	${VIEW_TARGET}
 	${OPEN} $<
@@ -30,6 +33,6 @@ view:	${VIEW_TARGET}
 clean:
 	rm *.pdf *.png
 
-up:	chaos.png
-	curl -F imagedata=@./chaos.png -F id=kogaidan -H "Expect:" http://gyazo.com/upload.cgi | strings
+up:	${TARGET}.png
+	curl -F imagedata=@./${TARGET}.png -F id=kogaidan -H "Expect:" http://gyazo.com/upload.cgi | strings
 

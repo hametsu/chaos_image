@@ -1,4 +1,12 @@
 digraph Hameatsudo {
   "@tks" -> "@todesking" [label = "社を代表するグロ好きエンジニア"];
+  "@tomad"
+  "@yosshibox"
+  "@sskhybrid"
+  "@ymrl"
+  "@niryuu" -> "@hagino3000" [label = "はぎーさんはかわいい♥"];
+  "@itkz"
+  "@hagino3000"
+  "@kmd"
 }
 
