@@ -11,6 +11,9 @@ digraph Hameatsudo {
   "@sskhybrid" -> "@itkz" [label = "1000年に一度の素材"];
   "@ymrl"
   "@niryuu" -> "@hagino3000" [label = "かわいい♥"];
+  "@niryuu" -> "@tomad" [label = "かわいい♥"];
+  "@niryuu" -> "@takano32" [label = "酒"];
+  "@takano32" -> "@niryuu" [label = "酒"];
   "@itkz" -> "@todesking" [label = "グロ仲間"];
   "@itkz" -> "@yuiseki" [label = "おもしろの源泉"];
   "@yuiseki" -> "@niryuu" [label = "ヒューマンコ"];
