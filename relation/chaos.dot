@@ -46,6 +46,8 @@ digraph Chaos {
   niryuu -> 小池陸 [label = "合法は修行"];
   niryuu -> niryuu [label = "合法"];
   niryuu -> Theoria [label = "焚きすぎてエクストリームや"];
+  niryuu -> VoQn [label = "実は破滅してるのでは"];
+  niryuu -> 西田さん [label = "かわいい"];
   subgraph cluster_hoge {
     style = filled;
     color = lightgrey;
