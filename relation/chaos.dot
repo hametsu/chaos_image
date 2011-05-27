@@ -48,6 +48,8 @@ digraph Chaos {
   pha[group=ギークハウス東日本橋];
   pha -> 糸柳和法 [label = "ギークハウス"];
   pha -> pha [label = "修行"];
+  takano32 -> 小池貞夫 [label = "お前が射精したから人類破滅だ！！！"];
+  小池陸 -> 小池貞夫 [label = "父親・・・らしい"];
   小池陸 -> 糸柳和法 [label = "修行やめろ"];
   小池陸 -> takano32 [label = "修行やめろ"];
   小池陸 -> 小林銅蟲 [label = "修行やめろ"];
