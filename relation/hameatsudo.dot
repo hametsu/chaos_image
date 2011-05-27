@@ -1,12 +1,20 @@
 digraph Hameatsudo {
-  "@tks" -> "@todesking" [label = "社を代表するグロ好きエンジニア"];
-  "@tomad"
+  graph [concentrate = true];
+  overlap=orthoxy;
+  "@tks" -> "@todesking" [label = "社のグロ好きエンジニア"];
+  "@takano32" -> "@todesking" [label = "同僚"];
+  "@takano32" -> "@hagino3000" [label = "かわいい♥"];
+  "@todesking" -> "@tks" [label = "ムダに元気ダナー"];
+  "@tomad" -> "@yuiseki" [label = "テクノロジー集団リーダー"];
   "@yosshibox"
-  "@sskhybrid"
+  "@sskhybrid" -> "@itkz" [label = "1000年に一度の素材"];
   "@ymrl"
-  "@niryuu" -> "@hagino3000" [label = "はぎーさんはかわいい♥"];
-  "@itkz"
-  "@hagino3000"
+  "@niryuu" -> "@hagino3000" [label = "かわいい♥"];
+  "@itkz" -> "@todesking" [label = "グロ仲間"];
+  "@itkz" -> "@yuiseki" [label = "おもしろの源泉"];
+  "@yuiseki" -> "@niryuu" [label = "ヒューマンコ"];
+  "@hagino3000" -> "@niryuu" [label = "被見学しましょう"];
   "@kmd"
+  label = "(teamlab x matine records x hametsu) Relation Diagram drawn by ARAKAWA Tomonori\nThe code of this diagram and itself are distributed under HAMETSU license.\nYou can check source code at https://github.com/takano32/chaos_image/tree/master/relation";
 }
 
