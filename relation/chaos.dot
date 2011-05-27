@@ -1,6 +1,6 @@
 digraph Chaos {
-  Theoria   -> Theoria  [label = "合法"];
   Theoria   -> Theoria  [label = "酒"];
+  Theoria   -> Theoria  [label = "合法"];
   Theoria   -> Theoria  [label = "リストカット"];
   Theoria   -> Theoria  [label = "オナニー（エネマグラ）"];
   梅ラボ    -> 藤城嘘   [label = "ゴムはつけた方が良いよ。"];
@@ -33,8 +33,8 @@ digraph Chaos {
   小林銅蟲 -> 琴葉とこ [label = "同類だと思っている"];
   小林銅蟲 -> 小林銅蟲 [label = "合法"];
   takano32 -> 小池陸 [label = "黙れクズ"];
-  takano32 -> takano32 [label = "合法"];
   takano32 -> takano32 [label = "酒"];
+  takano32 -> takano32 [label = "合法"];
   なほるる -> 琴葉とこ [label = "好き"];
   なほるる -> 四日市 [label = "お付き合い"];
   琴葉とこ -> なほるる [label = "わりとどうでもいい"];
