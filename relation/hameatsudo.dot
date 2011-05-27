@@ -1,0 +1,4 @@
+digraph Hameatsudo {
+  "@tks" -> "@todesking" [label = "社を代表するグロ好きエンジニア"];
+}
+
