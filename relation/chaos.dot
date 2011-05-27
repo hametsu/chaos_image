@@ -13,12 +13,18 @@ digraph Chaos {
 	糸柳和法 -> 黒瀬陽平 [label = "殺す"];
 	糸柳和法 -> 西田さん [label = "殺す"];
 	糸柳和法 -> "愛ちゃん(mimi)" [label = "殺す"];
+  糸柳和法 -> 四日市 [label = "好き"];
   小池陸 -> 糸柳和法 [label = "合法やめろ"];
   小池陸 -> takano32 [label = "合法やめろ"];
   小池陸 -> 小林銅蟲 [label = "合法やめろ"];
   小林銅蟲 -> 黒瀬陽平 [label = "とこちゃん守れ、金よこせ"];
+  小林銅蟲 -> 琴葉とこ [label = "同類だと思っている"];
   黒瀬陽平 -> 小林銅蟲 [label = "お前がとこちゃん危険に晒してんだろ死ねクソ"];
   takano32 -> 小池陸 [label = "黙れクズ"];
+  なほるる -> 琴葉とこ [label = "好き"];
+  なほるる -> 四日市 [label = "お付き合い"];
+  琴葉とこ -> なほるる [label = "わりとどうでもいい"];
+  四日市 -> なほるる [label = "お付き合い"];
 	label = "Chaos Lounge Relation Diagram drawn by ARAKAWA Tomonori\nThe code of this diagram and itself are distributed under HAMETSU license.";
 }
 
