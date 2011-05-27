@@ -4,6 +4,7 @@ digraph Hameatsudo {
   "@tks" -> "@todesking" [label = "社のグロ好きエンジニア"];
   "@takano32" -> "@todesking" [label = "同僚"];
   "@takano32" -> "@hagino3000" [label = "かわいい♥"];
+  "@takano32" -> "@yosshibox" [label = "リア充っぽくてステキ"];
   "@todesking" -> "@tks" [label = "ムダに元気ダナー"];
   "@tomad" -> "@yuiseki" [label = "テクノロジー集団リーダー"];
   "@yosshibox"
