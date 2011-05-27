@@ -22,5 +22,5 @@ clean:
 	rm *.pdf *.png
 
 up:	chaos.png
-	curl -F imagedata=@./chaos.png -F id=kogaidan -H "Expect:" http://gyazo.com/upload.cgi -v
+	curl -F imagedata=@./chaos.png -F id=kogaidan -H "Expect:" http://gyazo.com/upload.cgi | strings
 
