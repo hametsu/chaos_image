@@ -1,4 +1,6 @@
 digraph Chaos {
 	node [fontname="MSUIGOTHIC.ttf"];
-	梅ラボ -> 藤城嘘;
+	梅ラボ -> 藤城嘘[label = "ゴムはつけた方が良いよ。"];
+	藤城嘘 -> 梅ラボ[label = "ｗｗｗうぇｗ"];
 }
+
