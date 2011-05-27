@@ -9,6 +9,7 @@ digraph Hameatsudo {
   "@takano32" -> "@yosshibox" [label = "リア充っぽくてステキ"];
   "@todesking" -> "@tks" [label = "ムダに元気ダナー"];
   "@tomad" -> "@yuiseki" [label = "テクノロジー集団リーダー"];
+  "@tomad" -> "@sskhybrid" [label = "VJ VIDEOBOY"];
   "@yosshibox"
   "@sskhybrid" -> "@itkz" [label = "1000年に一度の素材"];
   "@sskhybrid" -> "@takano32" [label = "素材"];
