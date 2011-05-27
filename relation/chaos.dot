@@ -2,7 +2,7 @@ digraph Chaos {
   graph [concentrate = true];
 
   Theoria   -> Theoria  [label = "酒"];
-  Theoria   -> Theoria  [label = "ドラッグ"];
+  Theoria   -> Theoria  [label = "修行"];
   Theoria   -> Theoria  [label = "リストカット"];
   Theoria   -> Theoria  [label = "オナニー（エネマグラ）"];
 
@@ -16,6 +16,7 @@ digraph Chaos {
 
   西田さん[group=カオスラウンジ];
   西田さん -> 梅ラボ   [label = "あわよくば？"];
+  リズムシフト -> 梅ラボ [label = "あわよくば！！！"];
   西田さん -> 黒瀬陽平 [label = "信用できない"];
 
   リズムシフト -> 梅ラボ [label = "あわよくば？"];
@@ -42,30 +43,28 @@ digraph Chaos {
   糸柳和法 -> 愛ちゃん（mimi） [label = "殺す", fontsize=30, fontcolor="red"];
   糸柳和法 -> 四日市 [label = "好き"];
   糸柳和法 -> VoQn [label = "好き"];
-  糸柳和法 -> 糸柳和法 [label = "ドラッグ"];
-
+  糸柳和法 -> 糸柳和法 [label = "修行"];
   pha[group=ギークハウス東日本橋];
   pha -> 糸柳和法 [label = "ギークハウス"];
-  pha -> pha [label = "ドラッグ"];
-
-  小池陸 -> 糸柳和法 [label = "ドラッグやめろ"];
-  小池陸 -> takano32 [label = "ドラッグやめろ"];
-  小池陸 -> 小林銅蟲 [label = "ドラッグやめろ"];
-  小池陸 -> VoQn [label = "ドラッグやめろ"];
+  pha -> pha [label = "修行"];
+  小池陸 -> 糸柳和法 [label = "修行やめろ"];
+  小池陸 -> takano32 [label = "修行やめろ"];
+  小池陸 -> 小林銅蟲 [label = "修行やめろ"];
+  小池陸 -> VoQn [label = "修行やめろ"];
   小池陸 -> もちろん [label = "セックスしよう"];
-  小池陸 -> niryuu [label = "ドラッグやめろ"];
-  小池陸 -> pha [label = "ドラッグやめろ"];
+  小池陸 -> niryuu [label = "修行やめろ"];
+  小池陸 -> pha [label = "修行やめろ"];
   小池陸 -> Theoria [label = "お前はもう死ね"];
   もちろん -> 小池陸 [label = "セックスしよう"];
   もちろん -> 琴葉とこ [label = "わりとどうでもいい"];
   もちろん -> ひふみ [label = "はぁ？"];
-  miyoshi -> VoQn [label = "ドラッグやめろ"];
+  miyoshi -> VoQn [label = "修行やめろ"];
   小林銅蟲 -> 黒瀬陽平 [label = "とこちゃん守れ、金よこせ"];
   小林銅蟲 -> 琴葉とこ [label = "同類だと思っている"];
-  小林銅蟲 -> 小林銅蟲 [label = "ドラッグ"];
+  小林銅蟲 -> 小林銅蟲 [label = "修行"];
   takano32 -> 小池陸 [label = "黙れクズ"];
   takano32 -> takano32 [label = "酒"];
-  takano32 -> takano32 [label = "ドラッグ"];
+  takano32 -> takano32 [label = "修行"];
   なほるる -> 琴葉とこ [label = "好き"];
   なほるる -> 四日市 [label = "お付き合い"];
   なほるる -> ひふみ [label = "友達"];
@@ -75,35 +74,40 @@ digraph Chaos {
   四日市[group=ギークハウス東日本橋];
   四日市 -> なほるる [label = "お付き合い"];
   四日市 -> 糸柳和法 [label = "好き"];
-  四日市 -> 四日市 [label = "ドラッグ"];
+  四日市 -> 四日市 [label = "修行"];
   四日市 -> ひふみ [label = "死ねアホが"];
 
   ひふみ -> なほるる [label = "好き"];
   ひふみ -> もちろん [label = "好き"];
   VoQn -> 糸柳和法 [label = "好き"];
-  niryuu -> 小池陸 [label = "ドラッグは修行"];
-  niryuu -> niryuu [label = "ドラッグ"];
+  niryuu -> 小池陸 [label = "修行は修行"];
+  niryuu -> niryuu [label = "修行"];
   niryuu -> Theoria [label = "焚きすぎてエクストリームや"];
   niryuu -> VoQn [label = "実は破滅してるのでは"];
   niryuu -> 西田さん [label = "かわいい"];
 
-  糸柳和法 -> ギークハウス東日本橋（ドラッグハウス）[label = "入り浸っている"];
-  黒瀬陽平 -> ギークハウス東日本橋（ドラッグハウス）[label = "入り浸っている"];
-  Theoria -> ギークハウス東日本橋（ドラッグハウス）[label = "入り浸っている"];
-  小林銅蟲 -> ギークハウス東日本橋（ドラッグハウス）[label = "入り浸っている"];
-  pha -> ギークハウス東日本橋（ドラッグハウス）[label = "主宰"];
-  四日市 -> ギークハウス東日本橋（ドラッグハウス） [label = "住人"];
+  糸柳和法 -> ギークハウス東日本橋（修行ハウス）[label = "入り浸っている"];
+  黒瀬陽平 -> ギークハウス東日本橋（修行ハウス）[label = "入り浸っている"];
+  Theoria -> ギークハウス東日本橋（修行ハウス）[label = "入り浸っている"];
+  小林銅蟲 -> ギークハウス東日本橋（修行ハウス）[label = "入り浸っている"];
+  pha -> ギークハウス東日本橋（修行ハウス）[label = "主宰"];
+  四日市 -> ギークハウス東日本橋（修行ハウス） [label = "住人"];
 
   糸柳和法 -> ドワンゴ [label = "社員"];
   Theoria -> ドワンゴ [label = "社員"];
   VoQn -> ドワンゴ [label = "社員"];
   四日市 -> ドワンゴ [label = "社員"];
   助田（OSSAN） -> ドワンゴ [label = "社員"];
-  subgraph cluster_hoge {
+
+  // see also http://graphviz.org/content/cluster
+
+  subgraph cluster_theoria {
+    label = "人外";
     style = filled;
     color = lightgrey;
-    // see also http://graphviz.org/content/cluster
+    Theoria
   }
+
   label = "Chaos Lounge Relation Diagram drawn by ARAKAWA Tomonori\nThe code of this diagram and itself are distributed under HAMETSU license.\nYou can check source code at https://github.com/takano32/chaos_image/tree/master/relation";
 }
 
