@@ -8,7 +8,7 @@ digraph Chaos {
   梅ラボ -> "愛ちゃん(mimi)" [label = "ずっと好きだったんだぜ♪"];
   藤城嘘   -> 梅ラボ   [label = "ｗｗｗうぇｗ"];
   西田さん -> 梅ラボ   [label = "あわよくば？"];
-  リズムシフト -> 梅ラボ [label = "あわよくば？"];
+  リズムシフト -> 梅ラボ [label = "あわよくば！！！"];
   西田さん -> 黒瀬陽平 [label = "信用できない"];
   黒瀬陽平 -> 西田さん [label = "今度こそ愛す"];
   黒瀬陽平 -> 小林銅蟲 [label = "とこちゃん危険だろ死ねクソ"];
@@ -76,8 +76,10 @@ digraph Chaos {
   四日市 -> ドワンゴ [label = "社員"];
   助田（OSSAN） -> ドワンゴ [label = "社員"];
   subgraph cluster_hoge {
+    label = "人外";
     style = filled;
     color = lightgrey;
+    Theoria
     // see also http://graphviz.org/content/cluster
   }
   label = "Chaos Lounge Relation Diagram drawn by ARAKAWA Tomonori\nThe code of this diagram and itself are distributed under HAMETSU license.\nYou can check source code at https://github.com/takano32/chaos_image/tree/master/relation";
