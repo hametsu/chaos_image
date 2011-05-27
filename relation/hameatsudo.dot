@@ -10,7 +10,7 @@ digraph Hameatsudo {
   "@yosshibox"
   "@sskhybrid" -> "@itkz" [label = "1000年に一度の素材"];
   "@sskhybrid" -> "@takano32" [label = "素材"];
-  "@ymrl"
+  "@ymrl" -> "@takano32" [label = "素材"];
   "@niryuu" -> "@hagino3000" [label = "かわいい♥"];
   "@niryuu" -> "@tomad" [label = "かわいい♥"];
   "@niryuu" -> "@takano32" [label = "酒"];
