@@ -65,7 +65,7 @@ digraph Chaos {
   小林銅蟲 -> 黒瀬陽平 [label = "とこちゃん守れ、金よこせ"];
   小林銅蟲 -> 琴葉とこ [label = "同類だと思っている"];
   小林銅蟲 -> 小林銅蟲 [label = "修行"];
-  takano32 -> 小池陸 [label = "黙れクズ"];
+  takano32 -> 小池陸 [label = "黙れクズ、お前も修行してんだろうが"];
   takano32 -> takano32 [label = "酒"];
   takano32 -> takano32 [label = "修行"];
   なほるる -> 琴葉とこ [label = "好き"];
