@@ -85,7 +85,7 @@ digraph Chaos {
   VoQn -> 糸柳和法 [label = "好き"];
   niryuu -> 小池陸 [label = "修行は修行"];
   niryuu -> niryuu [label = "修行"];
-  niryuu -> Theoria [label = "焚きすぎてエクストリームや"];
+  niryuu -> Theoria [label = "修行しすぎてエクストリームや"];
   niryuu -> VoQn [label = "実は破滅してるのでは"];
   niryuu -> 西田さん [label = "かわいい"];
 
