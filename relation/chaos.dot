@@ -1,5 +1,6 @@
 digraph Chaos {
   graph [concentrate = true];
+  overlap=orthoxy;
 
   Theoria   -> Theoria  [label = "酒"];
   Theoria   -> Theoria  [label = "修行"];
@@ -35,7 +36,7 @@ digraph Chaos {
   愛ちゃん（mimi）[group=カオスラウンジ];
   愛ちゃん（mimi） -> 梅ラボ [label = "お付き合い♥"];
 
-  糸柳和法[shape=none, image="icon/itkz.png", group=ギークハウス東日本橋];
+  糸柳和法[shape=none, image="icon/itkz.png", fontsize = 30, fontcolor = "red", group=ギークハウス東日本橋];
   糸柳和法 -> 梅ラボ  [label = "殺す", fontsize=30, fontcolor="red"];
   糸柳和法 -> 藤城嘘   [label = "殺す", fontsize=30, fontcolor="red"];
   糸柳和法 -> 黒瀬陽平 [label = "殺す", fontsize=30, fontcolor="red"];
@@ -58,6 +59,7 @@ digraph Chaos {
   小池陸 -> niryuu [label = "修行やめろ"];
   小池陸 -> pha [label = "修行やめろ"];
   小池陸 -> Theoria [label = "お前はもう死ね"];
+  もちろん[group=マルチネ];
   もちろん -> 小池陸 [label = "セックスしよう"];
   もちろん -> 琴葉とこ [label = "わりとどうでもいい"];
   もちろん -> ひふみ [label = "はぁ？"];
