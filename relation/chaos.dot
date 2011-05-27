@@ -17,6 +17,7 @@ digraph Chaos {
   糸柳和法 -> 四日市 [label = "好き"];
   糸柳和法 -> VoQn [label = "好き"];
   糸柳和法 -> mala [label = "複雑な感情"];
+  糸柳和法 -> 糸柳和法 [label = "合法"];
   mala -> 糸柳和法 [label = "金返せ"];
   小池陸 -> 糸柳和法 [label = "合法やめろ"];
   小池陸 -> takano32 [label = "合法やめろ"];
@@ -27,12 +28,16 @@ digraph Chaos {
   miyoshi -> VoQn [label = "合法やめろ"];
   小林銅蟲 -> 黒瀬陽平 [label = "とこちゃん守れ、金よこせ"];
   小林銅蟲 -> 琴葉とこ [label = "同類だと思っている"];
+  小林銅蟲 -> 小林銅蟲 [label = "合法"];
   takano32 -> 小池陸 [label = "黙れクズ"];
+  takano32 -> takano32 [label = "合法"];
+  takano32 -> takano32 [label = "酒"];
   なほるる -> 琴葉とこ [label = "好き"];
   なほるる -> 四日市 [label = "お付き合い"];
   琴葉とこ -> なほるる [label = "わりとどうでもいい"];
   四日市 -> なほるる [label = "お付き合い"];
   四日市 -> 糸柳和法 [label = "好き"];
+  四日市 -> 四日市 [label = "合法"];
   VoQn -> 糸柳和法 [label = "好き"];
   subgraph cluster_hoge {
     style = filled;
