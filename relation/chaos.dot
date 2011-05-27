@@ -42,6 +42,9 @@ digraph Chaos {
   四日市 -> 糸柳和法 [label = "好き"];
   四日市 -> 四日市 [label = "合法"];
   VoQn -> 糸柳和法 [label = "好き"];
+  ssig33 -> niryuu [label = "合法やめろ"];
+  niryuu -> ssig33 [label = "合法は修行"];
+  niryuu -> niryuu [label = "合法"];
   subgraph cluster_hoge {
     style = filled;
     color = lightgrey;
