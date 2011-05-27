@@ -1,25 +1,40 @@
 digraph Chaos {
+  graph [concentrate = true];
+
   Theoria   -> Theoria  [label = "酒"];
   Theoria   -> Theoria  [label = "ドラッグ"];
   Theoria   -> Theoria  [label = "リストカット"];
   Theoria   -> Theoria  [label = "オナニー（エネマグラ）"];
+
+  梅ラボ[group=カオスラウンジ];
   梅ラボ    -> 藤城嘘   [label = "ゴムはつけた方が良いよ"];
   梅ラボ    -> 西田さん [label = "美人ですよね"];
-  梅ラボ -> "愛ちゃん(mimi)" [label = "ずっと好きだったんだぜ♪"];
+  梅ラボ -> 愛ちゃん（mimi） [label = "ずっと好きだったんだぜ♪"];
+
+  藤城嘘[group=カオスラウンジ];
   藤城嘘   -> 梅ラボ   [label = "ｗｗｗうぇｗ"];
+
+  西田さん[group=カオスラウンジ];
   西田さん -> 梅ラボ   [label = "あわよくば？"];
-  リズムシフト -> 梅ラボ [label = "あわよくば？"];
   西田さん -> 黒瀬陽平 [label = "信用できない"];
+
+  リズムシフト -> 梅ラボ [label = "あわよくば？"];
+
+  黒瀬陽平[group=カオスラウンジ];
   黒瀬陽平 -> 西田さん [label = "今度こそ愛す"];
   黒瀬陽平 -> 小林銅蟲 [label = "とこちゃん危険だろ死ねクソ"];
   黒瀬陽平 -> ひふみ [label = "死ねアホが"];
   黒瀬陽平 -> 助田（OSSAN） [label =  "片腕"];
+
+  助田（OSSAN）[group=カオスラウンジ];
   助田（OSSAN） -> 黒瀬陽平 [label = "補佐"];
   助田（OSSAN） -> 飯 [label = "大好き!!!"];
   飯 -> 助田（OSSAN） [label = "大好き!!!"];
+
+  愛ちゃん（mimi）[group=カオスラウンジ];
   愛ちゃん（mimi） -> 梅ラボ [label = "お付き合い♥"];
 
-  糸柳和法[image="icon/itkz.png"];
+  糸柳和法[image="icon/itkz.png", group=ギークハウス東日本橋];
   糸柳和法 -> 梅ラボ  [label = "殺す", fontsize=30, fontcolor="red"];
   糸柳和法 -> 藤城嘘   [label = "殺す", fontsize=30, fontcolor="red"];
   糸柳和法 -> 黒瀬陽平 [label = "殺す", fontsize=30, fontcolor="red"];
@@ -28,8 +43,11 @@ digraph Chaos {
   糸柳和法 -> 四日市 [label = "好き"];
   糸柳和法 -> VoQn [label = "好き"];
   糸柳和法 -> 糸柳和法 [label = "ドラッグ"];
+
+  pha[group=ギークハウス東日本橋];
   pha -> 糸柳和法 [label = "ギークハウス"];
   pha -> pha [label = "ドラッグ"];
+
   小池陸 -> 糸柳和法 [label = "ドラッグやめろ"];
   小池陸 -> takano32 [label = "ドラッグやめろ"];
   小池陸 -> 小林銅蟲 [label = "ドラッグやめろ"];
@@ -53,10 +71,13 @@ digraph Chaos {
   なほるる -> ひふみ [label = "友達"];
   琴葉とこ -> なほるる [label = "わりとどうでもいい"];
   琴葉とこ -> もちろん [label = "気があるの？"];
+
+  四日市[group=ギークハウス東日本橋];
   四日市 -> なほるる [label = "お付き合い"];
   四日市 -> 糸柳和法 [label = "好き"];
   四日市 -> 四日市 [label = "ドラッグ"];
   四日市 -> ひふみ [label = "死ねアホが"];
+
   ひふみ -> なほるる [label = "好き"];
   ひふみ -> もちろん [label = "好き"];
   VoQn -> 糸柳和法 [label = "好き"];
