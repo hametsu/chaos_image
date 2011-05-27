@@ -1,5 +1,4 @@
 digraph Chaos {
-  node [fontname="MSUIGOTHIC.ttf"];
   Theoria   -> Theoria  [label = "合法"];
   梅ラボ    -> 藤城嘘   [label = "ゴムはつけた方が良いよ。"];
   梅ラボ    -> 西田さん [label = "美人ですよね。"];
