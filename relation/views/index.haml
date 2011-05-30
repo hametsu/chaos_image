@@ -18,7 +18,8 @@
       %td
         %input{:type => "submit"}
 
-- @relations.each do |relation|
-  .relation
-    = relation.to_edge
+%img{'src' => 'data:image/png;base64,' + Relations.to_base64png}
+
+-# %pre
+-#   = Relations.to_dot
 
