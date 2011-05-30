@@ -1,38 +1,33 @@
 require 'rubygems'
 require 'sinatra'
-require 'json'
-require 'dm-core'
-require 'dm-migrations'
-require 'dm-sqlite-adapter'
+require 'sinatra/reloader'
+require 'model/relation'
 
-class User
-	include DataMapper::Resource
 
-	property :id, Serial
-	property :name, Text
+
+helpers do
+	include Rack::Utils; alias_method :h, :escape_html
 end
+
 configure do
-	DataMapper.setup(:default, 'sqlite:db.sqlite3')
-	DataMapper.auto_migrate!
 end
 
 get '/' do
-	'hello, world!'
+	@relations = Relations.all
+	haml :index
 end
 
-get '/json' do
-	{1 => 2}.to_json
+put '/new' do
+	parameter = {
+		:from  => request[:from],
+		:to    => request[:to],
+		:label => request[:label],
+	}
+	Relations.create(parameter)
+	redirect '/'
 end
 
-
-get '/save' do
-	user = User.new
-	user.name = 'hoge'
-	user.save
-	user.name
-end
-
-get '/user/:id' do
-	user = User.get params[:id].to_i
-	user.name
+get '/relation/:id' do
+	relation = Relations.get params[:id].to_i
+	relation.to_edge
 end

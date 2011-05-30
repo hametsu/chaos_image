@@ -36,3 +36,6 @@ clean:
 up:	${TARGET}.png
 	curl -F imagedata=@./${TARGET}.png -F id=kogaidan -H "Expect:" http://gyazo.com/upload.cgi | strings
 
+web:
+	ruby app.rb
+
