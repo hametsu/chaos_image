@@ -2,7 +2,7 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
 require 'model/relation'
-
+require 'haml'
 
 helpers do
 	include Rack::Utils; alias_method :h, :escape_html
