@@ -28,7 +28,7 @@ class Relations < Sequel::Model
 		Relations.all.each do |relation|
 			result << relation.to_edge
 		end
-		copyright = 'Chaos Lounge Relation Diagram drawn by ARAKAWA Tomonori'
+		copyright = 'Relation Diagram drawn by ARAKAWA Tomonori'
 		license   = 'The code of this diagram and itself are distributed under HAMETSU license.'
 		url       = 'You can check source code at https://github.com/takano32/chaos_image/tree/master/relation'
 		result << %Q[  label = "#{copyright}\\n#{license}\\n#{url}";]
