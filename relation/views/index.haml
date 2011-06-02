@@ -12,14 +12,24 @@
     %tr
       %td label
       %td
-        %textarea{:name => "label", :cols => 60, :rows => 8}
+        %input{:type => "text", :name => "label"}
     %tr
       %td
       %td
         %input{:type => "submit"}
 
-%img{'src' => 'data:image/png;base64,' + Relations.to_base64png}
+%form{:method => 'POST', :action => '/delete'}
+  %input{:type => "hidden", :name => "_method", :value => "PUT"}
+  %input{:type => 'submit', :value => '消す'}
+  %br
+  - @relations.each do |r|
+    %input{:type => 'checkbox', :name => "relation", :value => r.id}
+    = r.to_s
+    %br
 
--# %pre
--#   = Relations.to_dot
+
+  
+
+
+%img{'src' => 'data:image/png;base64,' + Relations.to_base64png}
 

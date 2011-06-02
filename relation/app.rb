@@ -26,6 +26,18 @@ put '/new' do
 	redirect '/'
 end
 
+put '/delete' do
+	parameter = {
+		:id => request[:relation],
+	}
+	p parameter[:id]
+	p parameter[:id]
+
+	relation = Relations.find(:id => parameter[:id])
+	relation.delete
+	redirect '/'
+end
+
 get '/relation/:id' do
 	relation = Relations.get params[:id].to_i
 	relation.to_edge

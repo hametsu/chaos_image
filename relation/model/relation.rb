@@ -20,6 +20,10 @@ class Relations < Sequel::Model
 		%Q(  "#{self.from}" -> "#{self.to}" [label = "#{self.label}"];)
 	end
 
+	def to_s
+		"#{self.from} ====(#{self.label})====>> #{self.to}"
+	end
+
 	def self.to_dot
 		result = []
 		result << 'digraph Chaos {'
