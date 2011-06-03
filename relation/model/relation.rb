@@ -16,12 +16,29 @@ class Relations < Sequel::Model
 	end
 
 	def to_edge
-		self.from
-		%Q(  "#{self.from}" -> "#{self.to}" [label = "#{self.label}"];)
+		from = self.from
+		to = self.to
+		label = self.label
+
+		if from.empty? and to.empty? then
+			""
+		elsif from.empty? or to.empty? then
+			%Q(  "#{self.from + self.to}";)
+		else
+			unless label.empty? then
+				%Q(  "#{self.from}" -> "#{self.to}" [label = "#{self.label}"];)
+			else
+				%Q(  "#{self.from}" -> "#{self.to}";)
+			end
+		end
 	end
 
 	def to_s
-		"#{self.from} ====(#{self.label})====>> #{self.to}"
+		unless self.label.empty? then
+			"#{self.from} ====(#{self.label})====>> #{self.to}"
+		else
+			"#{self.from} ========>> #{self.to}"
+		end
 	end
 
 	def self.to_dot

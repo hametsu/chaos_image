@@ -1,3 +1,4 @@
+- # -*- coding: utf-8 -*-
 %form{:method => "POST", :action => '/new'}
   %input{:type => "hidden", :name => "_method", :value => "PUT"}
   %table
@@ -23,7 +24,7 @@
   %input{:type => 'submit', :value => '消す'}
   %br
   - @relations.each do |r|
-    %input{:type => 'checkbox', :name => "relation", :value => r.id}
+    %input{:type => 'checkbox', :name => "relation[]", :value => r.id}
     = r.to_s
     %br
 

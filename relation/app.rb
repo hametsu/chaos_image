@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
@@ -27,14 +28,11 @@ put '/new' do
 end
 
 put '/delete' do
-	parameter = {
-		:id => request[:relation],
-	}
-	p parameter[:id]
-	p parameter[:id]
-
-	relation = Relations.find(:id => parameter[:id])
-	relation.delete
+	ids = request[:relation]
+	ids.each do |id|
+		r = Relations.find(:id => id)
+		r.delete
+	end
 	redirect '/'
 end
 
