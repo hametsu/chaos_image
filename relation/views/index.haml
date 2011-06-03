@@ -28,7 +28,12 @@
     = r.to_s
     %br
 
-%img{'src' => 'data:image/png;base64,' + Relations.to_base64png}
+- @png = Relations.to_png
+%a{:href => url = Graphs.gyazo(Relations.to_png)}
+  = url
+%br
+- require 'base64'
+%img{'src' => 'data:image/png;base64,' + Base64.encode64(@png)}
 %br
 %a{:href => 'http://github.com/takano32/chaos_image/tree/master/relation'}
   http://github.com/takano32/chaos_image/tree/master/relation

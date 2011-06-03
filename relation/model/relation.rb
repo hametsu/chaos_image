@@ -57,14 +57,19 @@ class Relations < Sequel::Model
 		result.join("\n")
 	end
 
-	require 'base64'
-	def self.to_base64png
+	def self.to_png
 		cmd= "dot -Tpng"
 		data = IO.popen(cmd, "r+") do |io|
 			io.puts(self.to_dot)
 			io.close_write
 			io.read
 		end
+		data
+	end
+
+	require 'base64'
+	def self.to_base64png
+		data = self.to_png
 		Base64.encode64(data)
 	end
 end

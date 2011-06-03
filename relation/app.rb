@@ -2,8 +2,10 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
-require 'model/relation'
 require 'haml'
+
+require 'model/graph'
+require 'model/relation'
 
 helpers do
 	include Rack::Utils; alias_method :h, :escape_html
@@ -40,3 +42,4 @@ get '/relation/:id' do
 	relation = Relations.get params[:id].to_i
 	relation.to_edge
 end
+
