@@ -35,9 +35,9 @@ class Relations < Sequel::Model
 
 	def to_s
 		unless self.label.empty? then
-			"#{self.from} ====(#{self.label})====>> #{self.to}"
+			"#{self.from} =====(#{self.label})=====> #{self.to}"
 		else
-			"#{self.from} ========>> #{self.to}"
+			"#{self.from} ==========> #{self.to}"
 		end
 	end
 
@@ -52,7 +52,7 @@ class Relations < Sequel::Model
 		copyright = 'Relation Diagram drawn by ARAKAWA Tomonori'
 		license   = 'The code of this diagram and itself are distributed under HAMETSU license.'
 		url       = 'You can check source code at https://github.com/takano32/chaos_image/tree/master/relation'
-		result << %Q[  label = "#{copyright}\\n#{license}\\n#{url}";]
+		result << %Q[  label = "\\n\\n#{copyright}\\n#{license}\\n#{url}";]
 		result << '}'
 		result.join("\n")
 	end
