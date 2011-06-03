@@ -29,7 +29,7 @@
     %br
 
 - @png = Relations.to_png
-%a{:href => url = Graphs.gyazo(Relations.to_png)}
+%a{:href => url = Graphs.gyazo(@png)}
   = url
 %br
 - require 'base64'
