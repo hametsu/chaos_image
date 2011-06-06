@@ -1,0 +1,11 @@
+= Dynamic Relation Diagram
+
+= Requirements
+
+* Sinatra
+* Sequel
+* Sqlite3
+* Graphviz
+
+
+http://www.ruby-lang.org/ja/man/html/Digest_MD5.html
