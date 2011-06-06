@@ -10,6 +10,6 @@
 
 
 ## Relation ##
-[Dynamic Relation Graph](chaos_image/relation)
+[Dynamic Relation Graph](chaos_image/tree/master/relation)
 
 
