@@ -15,5 +15,10 @@ class Graphs < Sequel::Model
 		end
 		url
 	end
+	
+	require 'digest/md5'
+	def self.digest(data)
+		Digest::MD5.hexdigest(data)
+	end
 end
 

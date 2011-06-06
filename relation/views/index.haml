@@ -31,6 +31,8 @@
 - @png = Relations.to_png
 %a{:href => url = Graphs.gyazo(@png)}
   = url
+%p
+  = Graphs.digest(@png)
 %br
 - require 'base64'
 %img{'src' => 'data:image/png;base64,' + Base64.encode64(@png)}
