@@ -1,0 +1,3 @@
+[submodule "Umelaborized"]
+	path = Umelaborized
+	url = git@github.com:esehara/Umelaborized.git
