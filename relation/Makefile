@@ -1,4 +1,4 @@
-TARGET=hameatsudo
+TARGET=mad
 
 ifeq ($(OSTYPE),linux-gnu)
 	OPEN=gnome-open
