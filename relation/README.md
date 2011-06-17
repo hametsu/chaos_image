@@ -14,4 +14,9 @@
 * "make up" will upload graph image to gyazo.com
 * default target dot file is defined in Makefile
 
+## Relation Diagram Detail ##
+### chaos.dot ###
+Chaos * Lounge
+### mad.dot ###
+http://mad.yuiseki.net/
 
