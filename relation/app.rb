@@ -4,8 +4,8 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'haml'
 
-require 'model/graph'
-require 'model/relation'
+require './model/graph'
+require './model/relation'
 
 helpers do
 	include Rack::Utils; alias_method :h, :escape_html
