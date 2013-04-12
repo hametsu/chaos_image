@@ -52,7 +52,8 @@ class Relations < Sequel::Model
 		copyright = 'Relation Diagram drawn by ARAKAWA Tomonori'
 		license   = 'The code of this diagram and itself are distributed under HAMETSU license.'
 		url       = 'You can check source code at https://github.com/takano32/chaos_image/tree/master/relation'
-		result << %Q[  label = "\\n\\n#{copyright}\\n#{license}\\n#{url}";]
+		_ = %Q[  label = "\\n\\n#{copyright}\\n#{license}\\n#{url}";]
+
 		result << '}'
 		result.join("\n")
 	end
